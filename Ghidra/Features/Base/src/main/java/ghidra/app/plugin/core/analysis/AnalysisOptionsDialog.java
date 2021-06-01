@@ -15,11 +15,20 @@
  */
 package ghidra.app.plugin.core.analysis;
 
+import java.util.Iterator;
 import java.util.List;
 
 import docking.DialogComponentProvider;
 import ghidra.framework.options.EditorStateFactory;
+import ghidra.program.model.address.Address;
+import ghidra.program.model.listing.Function;
+import ghidra.program.model.listing.FunctionIterator;
+import ghidra.program.model.listing.FunctionManager;
 import ghidra.program.model.listing.Program;
+import ghidra.program.model.pcode.HighFunction;
+import ghidra.program.model.pcode.HighFunctionDBUtil;
+import ghidra.program.model.pcode.PcodeDataTypeManager;
+import ghidra.program.model.symbol.SourceType;
 import ghidra.util.HelpLocation;
 import ghidra.util.Msg;
 
@@ -31,7 +40,7 @@ public class AnalysisOptionsDialog extends DialogComponentProvider {
 	private boolean doAnalysis;
 	private AnalysisPanel panel;
 	private EditorStateFactory editorStateFactory = new EditorStateFactory();
-
+	private Program program;
 	/**
 	 * Constructor
 	 * 
@@ -39,6 +48,7 @@ public class AnalysisOptionsDialog extends DialogComponentProvider {
 	 */
 	AnalysisOptionsDialog(Program program) {
 		this(List.of(program));
+		this.program = program;
 	}
 
 	/**
@@ -66,6 +76,22 @@ public class AnalysisOptionsDialog extends DialogComponentProvider {
 		try {
 			panel.applyChanges();
 			doAnalysis = true;
+			FunctionManager functionManager = program.getFunctionManager();
+			FunctionIterator functionIterator = functionManager.getFunctions(false);
+
+			while (functionIterator.hasNext()){
+				Function function = functionIterator.next();
+				Address functionAddr = function.getEntryPoint();
+				PcodeDataTypeManager dtmanage = new PcodeDataTypeManager(program);
+				HighFunction hfunc = new HighFunction(function, program.getLanguage(), program.getCompilerSpec(), dtmanage);
+				SourceType source = SourceType.ANALYSIS;
+				if (hfunc.getFunction().getSignatureSource() == SourceType.USER_DEFINED) {
+					source = SourceType.USER_DEFINED;
+				}
+				HighFunctionDBUtil.commitReturnToDatabase(hfunc, source);
+				HighFunctionDBUtil.commitParamsToDatabase(hfunc, true, source);
+			}
+
 			close();
 		}
 		catch (Exception e) {
