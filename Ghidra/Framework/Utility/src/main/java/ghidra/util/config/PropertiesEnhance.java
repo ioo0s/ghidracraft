@@ -45,7 +45,7 @@ public class PropertiesEnhance extends Properties {
     }
 
     /**
-     * 转义正则特殊字符 （$()*+.[]?\^{},|）
+     * Transfer regular characters : （$()*+.[]?\^{},|）
      */
     public String escapeExprSpecialWord(String keyword) {
         if (keyword != null && keyword.length() > 0) {
