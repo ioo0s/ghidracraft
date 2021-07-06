@@ -21,8 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Let Properties be Nested
- * by using ${}
+ * Allow nested properties with ${} syntax
  * */
 
 public class PropertiesEnhance extends Properties {
@@ -45,7 +44,7 @@ public class PropertiesEnhance extends Properties {
     }
 
     /**
-     * Transfer regular characters : （$()*+.[]?\^{},|）
+     * Scape special regex characters （$()*+.[]?\^{},|）
      */
     public String escapeExprSpecialWord(String keyword) {
         if (keyword != null && keyword.length() > 0) {

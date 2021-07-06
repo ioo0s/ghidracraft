@@ -20,7 +20,7 @@ import java.util.*;
 
 import generic.jar.ResourceFile;
 import ghidra.framework.ApplicationProperties;
-import ghidra.framework.ConfigurationProperties;
+import ghidra.framework.ColorProperties;
 import ghidra.framework.GModule;
 import ghidra.util.SystemUtilities;
 import utilities.util.FileUtilities;
@@ -51,7 +51,7 @@ public class GhidraApplicationLayout extends ApplicationLayout {
 		applicationProperties = new ApplicationProperties(applicationRootDirs);
 
 		// Configuration properties
-		configurationProperties = new ConfigurationProperties(applicationRootDirs);
+		colorProperties = new ColorProperties(applicationRootDirs);
 
 		// Application installation directory
 		applicationInstallationDir = findGhidraApplicationInstallationDir();
@@ -101,7 +101,7 @@ public class GhidraApplicationLayout extends ApplicationLayout {
 		applicationProperties = new ApplicationProperties(applicationRootDirs);
 
 		// Configuration properties
-		configurationProperties = new ConfigurationProperties(applicationRootDirs);
+		colorProperties = new ColorProperties(applicationRootDirs);
 
 		// User directories
 		userTempDir = ApplicationUtilities.getDefaultUserTempDir(getApplicationProperties());

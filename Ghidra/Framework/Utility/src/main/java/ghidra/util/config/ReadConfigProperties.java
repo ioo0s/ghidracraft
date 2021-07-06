@@ -15,7 +15,7 @@
  */
 package ghidra.util.config;
 
-import ghidra.framework.ConfigurationProperties;
+import ghidra.framework.ColorProperties;
 
 import java.awt.*;
 
@@ -24,10 +24,10 @@ import static utility.application.ApplicationLayout.getConfigurationProperties;
 
 public class ReadConfigProperties {
 
-    static ConfigurationProperties configurationProperties = getConfigurationProperties();
+    static ColorProperties colorProperties = getConfigurationProperties();
 
     public static Color findColor(String key){
-        Color color = configurationProperties.ReadColorFromProperties(key);
+        Color color = colorProperties.readColorFromProperties(key);
         return color;
     }
 

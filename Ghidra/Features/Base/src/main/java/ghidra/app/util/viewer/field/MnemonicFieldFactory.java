@@ -45,9 +45,9 @@ import static ghidra.util.config.ReadConfigProperties.findColor;
   */
 public class MnemonicFieldFactory extends FieldFactory {
 	public static final String FIELD_NAME = "Mnemonic";
-	public static final Color OVERRIDE_COLOR = findColor("OVERRIDE");
+	public static final Color OVERRIDE_COLOR = findColor("Override");
 // TODO: Should BAD_PROTOTYPE_COLOR be an option?
-	private final static Color BAD_PROTOTYPE_COLOR = findColor("BAD_PROTOTYPE");
+	private final static Color BAD_PROTOTYPE_COLOR = findColor("ProtoType.Bad");
 	private final static String SHOW_UNDERLINE_FOR_REFERENCES =
 		GhidraOptions.MNEMONIC_GROUP_TITLE + Options.DELIMITER + "Underline Fields With References";
 

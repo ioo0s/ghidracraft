@@ -86,20 +86,20 @@ public class FunctionGraphOptions extends VisualGraphOptions {
 		"Signals that any user color changes to a group vertex will apply that same color to " +
 			"all grouped vertices as well.";
 
-	public static final Color DEFAULT_VERTEX_BACKGROUND_COLOR = findColor("DEFAULT_VERTEX_BACKGROUN");
-	public static final Color DEFAULT_GROUP_BACKGROUND_COLOR = findColor("DEFAULT_GROUP_BACKGROUND");
-	private static final Color HOVER_HIGHLIGHT_FALL_THROUGH_COLOR = findColor("HOVER_HIGHLIGHT_FALL_THROUGH");
-	private static final Color HOVER_HIGHLIGHT_UNCONDITIONAL_COLOR = findColor("HOVER_HIGHLIGHT_UNCONDITIONAL");
-	private static final Color HOVER_HIGHLIGHT_CONDITIONAL_COLOR = findColor("HOVER_HIGHLIGHT_CONDITIONAL");
+	public static final Color DEFAULT_VERTEX_BACKGROUND_COLOR = findColor("Default.Vertex.Background");
+	public static final Color DEFAULT_GROUP_BACKGROUND_COLOR = findColor("Default.Group.Background");
+	private static final Color HOVER_HIGHLIGHT_FALL_THROUGH_COLOR = findColor("Hover.Highlight.Fall.Through");
+	private static final Color HOVER_HIGHLIGHT_UNCONDITIONAL_COLOR = findColor("Hover.Highlight.Unconditional");
+	private static final Color HOVER_HIGHLIGHT_CONDITIONAL_COLOR = findColor("Hover.Highlight.Conditional");
 
 	private Color defaultVertexBackgroundColor = DEFAULT_VERTEX_BACKGROUND_COLOR;
 
 	private boolean updateGroupColorsAutomatically = true;
 	private Color defaultGroupBackgroundColor = DEFAULT_GROUP_BACKGROUND_COLOR;
 
-	private Color fallthroughEdgeColor = findColor("FallthroughEdge");
-	private Color unconditionalJumpEdgeColor = findColor("UnconditionalJumpEdge");
-	private Color conditionalJumpEdgeColor = findColor("ConditionalJumpEdge");
+	private Color fallthroughEdgeColor = findColor("Edge.Fall.through");
+	private Color unconditionalJumpEdgeColor = findColor("Edge.Unconditional.Jump");
+	private Color conditionalJumpEdgeColor = findColor("Edge.Conditional.Jump");
 
 	private Color fallthroughEdgeHighlightColor = HOVER_HIGHLIGHT_FALL_THROUGH_COLOR;
 	private Color unconditionalJumpEdgeHighlightColor = HOVER_HIGHLIGHT_UNCONDITIONAL_COLOR;

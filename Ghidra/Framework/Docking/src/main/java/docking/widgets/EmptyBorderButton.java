@@ -110,16 +110,15 @@ public class EmptyBorderButton extends JButton {
 	}
 
 	public void setFocusBackground(){
-		setBackground(findColor("Button.background.focus"));
+		setBackground(findColor("Button.Background.Focus"));
 	}
 
 	public void setPressBackground(){
-		setBackground(findColor("Button.background.pressed"));
+		setBackground(findColor("Button.Background.Pressed"));
 	}
 
 	public void clearBackground() {
-		setBackground(findColor("Button.background"));
-//		setBackground(new Color(0, 0, 0, 0));
+		setBackground(findColor("Button.Background"));
 	}
 
 	public void clearBorder() {

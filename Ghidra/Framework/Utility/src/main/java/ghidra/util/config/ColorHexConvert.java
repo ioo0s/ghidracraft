@@ -44,28 +44,28 @@ public class ColorHexConvert {
         su.append(b);
         return su.toString();
     }
+
     /**
      * String converts to Color Object
      * @param colorStr Hex Color String
      * @return Color Object
      * */
     public static Color toColorFromString(String colorStr){
-        if (colorStr.length() == 7){
-            colorStr = colorStr.replace("#","0xff");
-            color = toColorFromString0(colorStr);
+        colorStr = colorStr.replace("#","0x");
+        if (colorStr.length() == 8){
+            color = Color.decode(colorStr);
         }
-        else if (colorStr.length() == 9){
-            colorStr = colorStr.replace("#","0x");
-            color = toColorFromString0(colorStr);
+        else if (colorStr.length() == 10){
+            color = decodeSupportAlpha(colorStr);
         }
         else{
-            colorStr = "0xff000000";
-            color = toColorFromString0(colorStr);
+            colorStr = "0xFF000000";
+            color = decodeSupportAlpha(colorStr);
         }
         return color;
     }
 
-    public static Color toColorFromString0(String colorStr){
+    public static Color decodeSupportAlpha(String colorStr){
         String str_a = colorStr.substring(2, 4);
         String str_r = colorStr.substring(4, 6);
         String str_g = colorStr.substring(6, 8);

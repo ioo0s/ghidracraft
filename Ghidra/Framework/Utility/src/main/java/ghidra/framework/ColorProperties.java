@@ -29,50 +29,50 @@ import java.util.Collection;
 import static ghidra.util.config.ColorHexConvert.toColorFromString;
 
 
-public class ConfigurationProperties extends PropertiesEnhance {
+public class ColorProperties extends PropertiesEnhance {
 
     /**
      * The name of the Color properties file.
      */
     public static final String COLOR_PROPERTY_NAME = "Color.properties";
     public static final String COLOR_PROPERTY_FILE = "/RuntimeScripts/Common/support/Color.properties";
-    public static final String COLOR_PROPERTY_FILE_INS = "/support/Color.properties";
+    public static final String COLOR_PROPERTY_FILE_SUB = "/support/Color.properties";
 
     /**
-     * Creates a new configuration properties from the given config properties file.
+     * Creates a new color properties from the given config properties file.
      *
-     * @param configPropertiesFile The application properties file.
+     * @param colorPropertiesFile The color properties file.
      * @throws IOException If there was a problem loading/reading a discovered properties file.
      */
-    public ConfigurationProperties(ResourceFile configPropertiesFile) throws IOException {
+    public ColorProperties(ResourceFile colorPropertiesFile) throws IOException {
 
-        if (!configPropertiesFile.exists()) {
+        if (!colorPropertiesFile.exists()) {
             throw new FileNotFoundException(
-                    COLOR_PROPERTY_NAME + " file does not exist: " + configPropertiesFile);
+                    COLOR_PROPERTY_NAME + " file does not exist: " + colorPropertiesFile);
         }
-        try (InputStream in = configPropertiesFile.getInputStream()) {
+        try (InputStream in = colorPropertiesFile.getInputStream()) {
             load(in);
         }
     }
 
     /**
-     * Creates a new configuration properties from the configuration properties files found
-     * in the given application root directories.  If multiple configuration properties files
+     * Creates a new color properties from the color properties files found
+     * in the given application root directories.  If multiple color properties files
      * are found, the properties from the files will be combined.  If duplicate keys exist,
      * the newest key encountered will overwrite the existing key.
      *
      * @param applicationRootDirs The application root directories to look for the properties files in.
      * @throws IOException If there was a problem loading/reading a discovered properties file.
      */
-    public ConfigurationProperties(Collection<ResourceFile> applicationRootDirs) throws IOException {
+    public ColorProperties(Collection<ResourceFile> applicationRootDirs) throws IOException {
         boolean found = false;
         // Application installation directory
         ResourceFile applicationInstallationDir = applicationRootDirs.iterator().next().getParentFile();
         if (SystemUtilities.isInDevelopmentMode()) {
             for (ResourceFile appRoot : applicationRootDirs) {
-                ResourceFile configPropertiesFile = new ResourceFile(appRoot, COLOR_PROPERTY_FILE);
-                if (configPropertiesFile.exists()) {
-                    try (InputStream in = configPropertiesFile.getInputStream()) {
+                ResourceFile colorPropertiesFile = new ResourceFile(appRoot, COLOR_PROPERTY_FILE);
+                if (colorPropertiesFile.exists()) {
+                    try (InputStream in = colorPropertiesFile.getInputStream()) {
                         load(in);
                         found = true;
                     }
@@ -80,9 +80,9 @@ public class ConfigurationProperties extends PropertiesEnhance {
             }
         }
         else {
-            ResourceFile configPropertiesFile = new ResourceFile(applicationInstallationDir, COLOR_PROPERTY_FILE_INS);
-            if (configPropertiesFile.exists()) {
-                try (InputStream in = configPropertiesFile.getInputStream()) {
+            ResourceFile colorPropertiesFile = new ResourceFile(applicationInstallationDir, COLOR_PROPERTY_FILE_SUB);
+            if (colorPropertiesFile.exists()) {
+                try (InputStream in = colorPropertiesFile.getInputStream()) {
                     load(in);
                     found = true;
                 }
@@ -99,7 +99,7 @@ public class ConfigurationProperties extends PropertiesEnhance {
      * @param key Color.properties key
      * @return Color Object
      * */
-	public Color ReadColorFromProperties(String key) {
+	public Color readColorFromProperties(String key) {
 		Color color = toColorFromString(getProperty(key));
 		return color;
 	}

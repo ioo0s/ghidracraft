@@ -300,50 +300,50 @@ public class DecompileOptions {
 	private final static IntegerFormatEnum INTEGERFORMAT_OPTIONDEFAULT = IntegerFormatEnum.BestFit;		// Must match PrintLanguage::resetDefaultsInternal
 	private IntegerFormatEnum integerFormat;
 
-	private final static Color HIGHLIGHT_MIDDLE_MOUSE_DEF = findColor("HIGHLIGHT_MIDDLE_MOUSE_DEF");
+	private final static Color HIGHLIGHT_MIDDLE_MOUSE_DEF = findColor("Highlight.Middle.Mouse");
 	private Color middleMouseHighlightColor;
 	private int middleMouseHighlightButton = MouseEvent.BUTTON2;
 
 	private final static String HIGHLIGHT_CURRENT_VARIABLE_MSG =
 		"Display.Color for Current Variable Highlight";
-	private final static Color HIGHLIGHT_CURRENT_VARIABLE_DEF = findColor("HIGHLIGHT_CURRENT_VARIABLE_DEF");
+	private final static Color HIGHLIGHT_CURRENT_VARIABLE_DEF = findColor("Highlight.Current.Variable");
 	private Color currentVariableHighlightColor;
 
 	private final static String HIGHLIGHT_KEYWORD_MSG = "Display.Color for Keywords";
-	private final static Color HIGHLIGHT_KEYWORD_DEF = findColor("HIGHLIGHT_KEYWORD_DEF");
+	private final static Color HIGHLIGHT_KEYWORD_DEF = findColor("Highlight.KeyWord");
 	private Color keywordColor;
 	private final static String HIGHLIGHT_FUNCTION_MSG = "Display.Color for Function names";
-	private final static Color HIGHLIGHT_FUNCTION_DEF = findColor("HIGHLIGHT_FUNCTION_DEF");
+	private final static Color HIGHLIGHT_FUNCTION_DEF = findColor("Highlight.Function");
 	private Color functionColor;
 	private final static String HIGHLIGHT_COMMENT_MSG = "Display.Color for Comments";
-	private final static Color HIGHLIGHT_COMMENT_DEF = findColor("HIGHLIGHT_COMMENT_DEF");
+	private final static Color HIGHLIGHT_COMMENT_DEF = findColor("Highlight.Comment");
 	private Color commentColor;
 	private final static String HIGHLIGHT_VARIABLE_MSG = "Display.Color for Variables";
-	private final static Color HIGHLIGHT_VARIABLE_DEF = findColor("HIGHLIGHT_VARIABLE_DEF");
+	private final static Color HIGHLIGHT_VARIABLE_DEF = findColor("Highlight.Variable");
 	private Color variableColor;
 	private final static String HIGHLIGHT_CONST_MSG = "Display.Color for Constants";
-	private final static Color HIGHLIGHT_CONST_DEF = findColor("HIGHLIGHT_CONST_DEF");
+	private final static Color HIGHLIGHT_CONST_DEF = findColor("Highlight.Const");
 	private Color constantColor;
 	private final static String HIGHLIGHT_TYPE_MSG = "Display.Color for Types";
-	private final static Color HIGHLIGHT_TYPE_DEF = findColor("HIGHLIGHT_TYPE_DEF");
+	private final static Color HIGHLIGHT_TYPE_DEF = findColor("Highlight.Type");
 	private Color typeColor;
 	private final static String HIGHLIGHT_PARAMETER_MSG = "Display.Color for Parameters";
-	private final static Color HIGHLIGHT_PARAMETER_DEF = findColor("HIGHLIGHT_PARAMETER_DEF");
+	private final static Color HIGHLIGHT_PARAMETER_DEF = findColor("Highlight.Parameter");
 	private Color parameterColor;
 	private final static String HIGHLIGHT_GLOBAL_MSG = "Display.Color for Globals";
-	private final static Color HIGHLIGHT_GLOBAL_DEF = findColor("HIGHLIGHT_GLOBAL_DEF");
+	private final static Color HIGHLIGHT_GLOBAL_DEF = findColor("Highlight.Global");
 	private Color globalColor;
 	private final static String HIGHLIGHT_DEFAULT_MSG = "Display.Color Default";
-	private final static Color HIGHLIGHT_DEFAULT_DEF = findColor("HIGHLIGHT_DEFAULT_DEF");
+	private final static Color HIGHLIGHT_DEFAULT_DEF = findColor("Highlight.Default");
 	private Color defaultColor;
 
 	private static final String CODE_VIEWER_BACKGROUND_COLOR_MSG = "Display.Background Color";
-	private static final Color CODE_VIEWER_BACKGROUND_COLOR = findColor("CODE_VIEWER_BACKGROUND_COLOR");
+	private static final Color CODE_VIEWER_BACKGROUND_COLOR = findColor("CodeViewer.Background");
 	private Color codeViewerBackgroundColor;
 
 	private static final String SEARCH_HIGHLIGHT_MSG =
 		"Display.Color for Highlighting Find Matches";
-	private static final Color SEARCH_HIGHLIGHT_DEF = findColor("SEARCH_HIGHLIGHT_DEF");
+	private static final Color SEARCH_HIGHLIGHT_DEF = findColor("Search.Highlight");
 	private Color defaultSearchHighlightColor = SEARCH_HIGHLIGHT_DEF;
 
 	final static String FONT_MSG = "Display.Font";

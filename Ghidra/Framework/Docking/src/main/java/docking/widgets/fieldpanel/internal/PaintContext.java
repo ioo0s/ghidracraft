@@ -45,12 +45,12 @@ public class PaintContext {
 	 * Create a new PaintContext with default color values.
 	 */
 	public PaintContext() {
-		defaultBackground = findColor("Background.default");
+		defaultBackground = findColor("Background.Default");
 		background = findColor("Background");
 		foreground = findColor("Foreground");
 		selectionColor = findColor("Selection");
 		highlightColor = findColor("Highlight");
-		selectedHighlightColor = findColor("SelectedHighlight");
+		selectedHighlightColor = findColor("Selected.Highlight");
 		focusedCursorColor = findColor("Cursor.focused.on");
 		cursorColor = focusedCursorColor;
 		invisibleCursorColor = findColor("Cursor.invisible");
