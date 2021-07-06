@@ -29,6 +29,8 @@ import ghidra.program.model.address.Address;
 import ghidra.program.model.listing.Program;
 import ghidra.program.util.ChangeManager;
 
+import static ghidra.util.config.ReadConfigProperties.findColor;
+
 /**
  * Default {@link BackgroundColorModel} for the ListingPanel where the color returned
  * for an index is based on that corresponding address having a color set in the
@@ -40,7 +42,7 @@ public class PropertyBasedBackgroundColorModel
 	public static final String COLOR_PROPERTY_NAME = "LISTING_COLOR";
 	private IntRangeMap colorMap;
 	private AddressIndexMap indexMap;
-	private Color defaultBackgroundColor = new Color(56, 56 , 56);
+	private Color defaultBackgroundColor = findColor("Based.Background.Model");
 	private Map<Integer, Color> colorCache = new HashMap<>();
 	private Program program;
 	private boolean enabled = false;

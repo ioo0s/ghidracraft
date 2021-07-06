@@ -21,6 +21,7 @@ import java.util.*;
 
 import generic.jar.ResourceFile;
 import ghidra.framework.ApplicationProperties;
+import ghidra.framework.ConfigurationProperties;
 import ghidra.framework.GModule;
 import utilities.util.FileUtilities;
 
@@ -35,6 +36,7 @@ import utilities.util.FileUtilities;
 public abstract class ApplicationLayout {
 
 	protected ApplicationProperties applicationProperties;
+	protected static ConfigurationProperties configurationProperties;
 	protected Collection<ResourceFile> applicationRootDirs;
 	protected ResourceFile applicationInstallationDir;
 	protected Map<String, GModule> modules;
@@ -52,6 +54,15 @@ public abstract class ApplicationLayout {
 	 */
 	public final ApplicationProperties getApplicationProperties() {
 		return applicationProperties;
+	}
+
+	/**
+	 * Gets the configuration properties from the application layout
+	 *
+	 * @return The configuration properties.  Should never be null.
+	 */
+	public static final ConfigurationProperties getConfigurationProperties() {
+		return configurationProperties;
 	}
 
 	/**

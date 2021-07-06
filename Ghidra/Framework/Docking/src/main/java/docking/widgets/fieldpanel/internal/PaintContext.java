@@ -18,6 +18,8 @@ package docking.widgets.fieldpanel.internal;
 
 import java.awt.Color;
 
+import static ghidra.util.config.ReadConfigProperties.findColor;
+
 /**
  * Miscellaneous information needed by fields to paint.
  */
@@ -43,16 +45,16 @@ public class PaintContext {
 	 * Create a new PaintContext with default color values.
 	 */
 	public PaintContext() {
-		defaultBackground = Color.white;
-		background = Color.white;
-		foreground = Color.black;
-		selectionColor = new Color(36, 69, 112);
-		highlightColor = new Color(173, 214, 255, 38);
-		selectedHighlightColor = Color.green;
-		focusedCursorColor = Color.RED;
+		defaultBackground = findColor("Background.default");
+		background = findColor("Background");
+		foreground = findColor("Foreground");
+		selectionColor = findColor("Selection");
+		highlightColor = findColor("Highlight");
+		selectedHighlightColor = findColor("SelectedHighlight");
+		focusedCursorColor = findColor("Cursor.focused.on");
 		cursorColor = focusedCursorColor;
-		invisibleCursorColor = new Color(255, 0, 0, 1);
-		notFocusedCursorColor = Color.PINK;
+		invisibleCursorColor = findColor("Cursor.invisible");
+		notFocusedCursorColor = findColor("Cursor.focused.off");;
 	}
 
 	public PaintContext(PaintContext other) {

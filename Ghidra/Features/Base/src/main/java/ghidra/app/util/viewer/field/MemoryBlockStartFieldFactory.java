@@ -34,6 +34,8 @@ import ghidra.program.model.mem.MemoryBlockType;
 import ghidra.program.util.MemoryBlockStartFieldLocation;
 import ghidra.program.util.ProgramLocation;
 
+import static ghidra.util.config.ReadConfigProperties.findColor;
+
 /**
   *  Generates a text label on each {@link CodeUnit} that marks the start of a memory block. The
   *  label will will appear as part of the PLATE group in the field map.
@@ -41,7 +43,7 @@ import ghidra.program.util.ProgramLocation;
 public class MemoryBlockStartFieldFactory extends FieldFactory {
 
 	private static final String FIELD_NAME = "Memory Block Start";
-	private static final Color BLOCK_COLOR = new Color(180, 119, 224);
+	private static final Color BLOCK_COLOR = findColor("Memory.Block");
 
 	/**
 	 * Constructor

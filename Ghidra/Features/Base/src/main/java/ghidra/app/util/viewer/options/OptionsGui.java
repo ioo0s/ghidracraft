@@ -38,100 +38,80 @@ import docking.widgets.label.GDLabel;
 import ghidra.GhidraOptions;
 import ghidra.util.SystemUtilities;
 
+import static ghidra.util.config.ReadConfigProperties.findColor;
+
 /**
  * Class for displaying and manipulating field colors and fonts.
  */
 public class OptionsGui extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private static final Color DARK_GREEN = new Color(6, 201, 104);
-	private static final Color BLUE_GREEN = Color.decode("0x4fc1ff");
-	private static final Color DARK_BLUE = Color.decode("0x9e9e7a");
-	private static final Color PALE_BLUE = new Color(128, 128, 255);
-	private static final Color YELLOW_ORANGE = Color.decode("0xc98a32");
-	private static final Color PURPLE = Color.decode("0x9cdcfe");
-	private static final Color DEEP_PURPLE = new Color(212, 166, 245);
-	private static final Color DARK_PURPLE = new Color(237, 161, 236);
-	private static final Color DARK_CYAN = new Color(0, 207, 207);
-	private static final Color DARK_ORANGE = Color.decode("0xf07700");
-	private static final Color DARK_RED = Color.decode("0x9cdcfe");
-
-	private static final Color DARK_THEMED_BLACK = new Color(204, 202, 224);
-	private static final Color DARK_THEMED_LIGHT_GRAY = Color.decode("0x6c9953");
-	private static final Color DARK_THEMED_WHITE = new Color(56, 56, 56);
-	private static final Color DARK_THEMED_RED = Color.decode("0xf56e8b");
-	private static final Color DARK_THEMED_BLUE = Color.decode("0xdcdcaa");
-	private static final Color DARK_THEMED_MAGENTA = Color.decode("0x6d8cf2");
-	private static final Color DARK_THEMED_CYAN = Color.decode("0xc586c0");
-	private static final Color DARK_THEMED_GRAY = Color.decode("0x8bc46a");
+//	private static final Color DARK_GREEN = findColor("DARK_GREEN");
+//	private static final Color BLUE_GREEN = findColor("BLUE_GREEN");
+//	private static final Color DARK_BLUE = findColor("DARK_BLUE");
+//	private static final Color PALE_BLUE = findColor("PALE_BLUE");
+//	private static final Color YELLOW_ORANGE = findColor("YELLOW_ORANGE");
+//	private static final Color PURPLE = findColor("PURPLE");
+//	private static final Color DEEP_PURPLE = findColor("DEEP_PURPLE");
+//	private static final Color DARK_PURPLE = findColor("DARK_PURPLE");
+//	private static final Color DARK_CYAN = findColor("DARK_CYAN");
+//	private static final Color DARK_ORANGE = findColor("DARK_ORANGE");
+//	private static final Color DARK_RED = findColor("DARK_RED");
+//
+//	private static final Color DARK_THEMED_BLACK = findColor("DARK_THEMED_BLACK");
+//	private static final Color DARK_THEMED_LIGHT_GRAY = findColor("DARK_THEMED_LIGHT_GRAY");
+//	private static final Color DARK_THEMED_WHITE = findColor("DARK_THEMED_WHITE");
+//	private static final Color DARK_THEMED_RED = findColor("DARK_THEMED_RED");
+//	private static final Color DARK_THEMED_BLUE = findColor("DARK_THEMED_BLUE");
+//	private static final Color DARK_THEMED_MAGENTA = findColor("DARK_THEMED_MAGENTA");
+//	private static final Color DARK_THEMED_CYAN = findColor("DARK_THEMED_CYAN");
+//	private static final Color DARK_THEMED_GRAY = findColor("DARK_THEMED_GRAY");
 
 	private static final Highlight[] NO_HIGHLIGHTS = new Highlight[0];
 	private static final HighlightFactory hlFactory =
 		(field, text, cursorTextOffset) -> NO_HIGHLIGHTS;
 
-	public static final ScreenElement COMMENT_AUTO =
-		new ScreenElement("Comment, Automatic", DARK_THEMED_LIGHT_GRAY);
-	public static final ScreenElement ADDRESS = new ScreenElement("Address", DARK_THEMED_BLACK);
-	public static final ScreenElement BACKGROUND = new ScreenElement("Background", DARK_THEMED_WHITE);
-	public static final ScreenElement BAD_REF_ADDR =
-		new ScreenElement("Bad Reference Address", DARK_THEMED_RED);
-	public static final ScreenElement BYTES = new ScreenElement("Bytes", DARK_THEMED_BLUE);
-	public static final ScreenElement CONSTANT = new ScreenElement("Constant", BLUE_GREEN);
-	public static final ScreenElement LABELS_UNREFD =
-		new ScreenElement("Labels, Unreferenced", DARK_THEMED_BLACK);
-	public static final ScreenElement ENTRY_POINT = new ScreenElement("Entry Point", DARK_THEMED_MAGENTA);
-	public static final ScreenElement COMMENT_EOL =
-		new ScreenElement("Comment, EOL", "EOL Comment", DARK_THEMED_BLUE);
-	public static final ScreenElement EXT_REF_RESOLVED =
-		new ScreenElement("External Reference, Resolved", DARK_THEMED_CYAN);
-	public static final ScreenElement FIELD_NAME = new ScreenElement("Field Name", DARK_THEMED_BLACK);
-	public static final ScreenElement FUN_CALL_FIXUP =
-		new ScreenElement("Function Call-Fixup", new Color(245, 122, 206));
-	public static final ScreenElement FUN_NAME = new ScreenElement("Function Name", DARK_THEMED_BLUE);
-	public static final ScreenElement FUN_PARAMS =
-		new ScreenElement("Function Parameters", DARK_THEMED_BLACK);
-	public static final ScreenElement FUN_TAG = new ScreenElement("Function Tag", DARK_RED);
-	public static final ScreenElement FUN_AUTO_PARAMS =
-		new ScreenElement("Function Auto-Parameters", DARK_THEMED_GRAY);
-	public static final ScreenElement FUN_RET_TYPE =
-		new ScreenElement("Function Return Type", DARK_THEMED_BLACK);
-	public static final ScreenElement COMMENT_REPEATABLE =
-		new ScreenElement("Comment, Repeatable", DARK_ORANGE);
-	public static final ScreenElement COMMENT_REF_REPEAT =
-		new ScreenElement("Comment, Referenced Repeatable", new Color(144, 144, 144));
-	public static final ScreenElement LABELS_LOCAL = new ScreenElement("Labels, Local", BLUE_GREEN);
-	public static final ScreenElement MNEMONIC_OVERRIDE =
-		new ScreenElement("Mnemonic, Override", new Color(199, 2, 136));
-	public static final ScreenElement MNEMONIC = new ScreenElement("Mnemonic", DARK_BLUE);
-	public static final ScreenElement FLOW_ARROW_NON_ACTIVE =
-		new ScreenElement("Flow Arrow, Not Active", new Color(117, 117, 117));
-	public static final ScreenElement FLOW_ARROW_ACTIVE =
-		new ScreenElement("Flow Arrow, Active", DARK_THEMED_BLACK);
-	public static final ScreenElement FLOW_ARROW_SELECTED =
-		new ScreenElement("Flow Arrow, Selected", new Color(0, 97, 0));
-	public static final ScreenElement LABELS_NON_PRIMARY =
-		new ScreenElement("Labels, Non-primary", YELLOW_ORANGE);
-	public static final ScreenElement COMMENT_PLATE =
-		new ScreenElement("Comment, Plate", "Plate Comment", DARK_THEMED_GRAY);
-	public static final ScreenElement COMMENT_POST =
-		new ScreenElement("Comment, Post", "Post-Comment", DARK_THEMED_BLUE);
-	public static final ScreenElement COMMENT_PRE =
-		new ScreenElement("Comment, Pre", "Pre-Comment", DEEP_PURPLE);
-	public static final ScreenElement LABELS_PRIMARY =
-		new ScreenElement("Labels, Primary", DARK_BLUE);
-	public static final ScreenElement SEPARATOR = new ScreenElement("Separator", DARK_THEMED_BLACK);
-	public static final ScreenElement VARIABLE = new ScreenElement("Variable", PURPLE);
-	public static final ScreenElement PARAMETER_CUSTOM =
-		new ScreenElement("Parameter, Custom Storage", DARK_PURPLE);
-	public static final ScreenElement PARAMETER_DYNAMIC =
-		new ScreenElement("Parameter, Dynamic Storage", DARK_CYAN);
-	public static final ScreenElement VERSION_TRAK = new ScreenElement("Version Track", PURPLE);
-	public static final ScreenElement XREF = new ScreenElement("XRef", DARK_GREEN);
-	public static final ScreenElement XREF_OFFCUT = new ScreenElement("XRef, Offcut", DARK_THEMED_GRAY);
-	public static final ScreenElement XREF_READ = new ScreenElement("XRef Read", DARK_THEMED_BLUE);
-	public static final ScreenElement XREF_WRITE = new ScreenElement("XRef Write", DARK_ORANGE);
-	public static final ScreenElement XREF_OTHER = new ScreenElement("XRef Other", DARK_THEMED_BLACK);
-	public static final ScreenElement REGISTERS = new ScreenElement("Registers", YELLOW_ORANGE);
-	public static final ScreenElement UNDERLINE = new ScreenElement("Underline", PALE_BLUE);
+	public static final ScreenElement COMMENT_AUTO = new ScreenElement("Comment, Automatic", findColor("COMMENT_AUTO"));
+	public static final ScreenElement ADDRESS = new ScreenElement("Address", findColor("ADDRESS"));
+	public static final ScreenElement BACKGROUND = new ScreenElement("Background", findColor("BACKGROUND"));
+	public static final ScreenElement BAD_REF_ADDR = new ScreenElement("Bad Reference Address", findColor("BAD_REF_ADDR"));
+	public static final ScreenElement BYTES = new ScreenElement("Bytes", findColor("BYTES"));
+	public static final ScreenElement CONSTANT = new ScreenElement("Constant", findColor("CONSTANT"));
+	public static final ScreenElement LABELS_UNREFD = new ScreenElement("Labels, Unreferenced", findColor("LABELS_UNREFD"));
+	public static final ScreenElement ENTRY_POINT = new ScreenElement("Entry Point", findColor("ENTRY_POINT"));
+	public static final ScreenElement COMMENT_EOL = new ScreenElement("Comment, EOL", "EOL Comment", findColor("COMMENT_EOL"));
+	public static final ScreenElement EXT_REF_RESOLVED = new ScreenElement("External Reference, Resolved", findColor("EXT_REF_RESOLVED"));
+	public static final ScreenElement FIELD_NAME = new ScreenElement("Field Name", findColor("FIELD_NAME"));
+	public static final ScreenElement FUN_CALL_FIXUP = new ScreenElement("Function Call-Fixup", findColor("FUN_CALL_FIXUP"));
+	public static final ScreenElement FUN_NAME = new ScreenElement("Function Name", findColor("FUN_NAME"));
+	public static final ScreenElement FUN_PARAMS = new ScreenElement("Function Parameters", findColor("FUN_PARAMS"));
+	public static final ScreenElement FUN_TAG = new ScreenElement("Function Tag", findColor("FUN_TAG"));
+	public static final ScreenElement FUN_AUTO_PARAMS = new ScreenElement("Function Auto-Parameters", findColor("FUN_AUTO_PARAMS"));
+	public static final ScreenElement FUN_RET_TYPE = new ScreenElement("Function Return Type", findColor("FUN_RET_TYPE"));
+	public static final ScreenElement COMMENT_REPEATABLE = new ScreenElement("Comment, Repeatable", findColor("COMMENT_REPEATABLE"));
+	public static final ScreenElement COMMENT_REF_REPEAT = new ScreenElement("Comment, Referenced Repeatable", findColor("COMMENT_REF_REPEAT"));
+	public static final ScreenElement LABELS_LOCAL = new ScreenElement("Labels, Local", findColor("LABELS_LOCAL"));
+	public static final ScreenElement MNEMONIC_OVERRIDE = new ScreenElement("Mnemonic, Override", findColor("MNEMONIC_OVERRIDE"));
+	public static final ScreenElement MNEMONIC = new ScreenElement("Mnemonic", findColor("MNEMONIC"));
+	public static final ScreenElement FLOW_ARROW_NON_ACTIVE = new ScreenElement("Flow Arrow, Not Active", findColor("FLOW_ARROW_NON_ACTIVE"));
+	public static final ScreenElement FLOW_ARROW_ACTIVE = new ScreenElement("Flow Arrow, Active", findColor("FLOW_ARROW_ACTIVE"));
+	public static final ScreenElement FLOW_ARROW_SELECTED = new ScreenElement("Flow Arrow, Selected", findColor("FLOW_ARROW_SELECTED"));
+	public static final ScreenElement LABELS_NON_PRIMARY = new ScreenElement("Labels, Non-primary", findColor("LABELS_NON_PRIMARY"));
+	public static final ScreenElement COMMENT_PLATE = new ScreenElement("Comment, Plate", "Plate Comment", findColor("COMMENT_PLATE"));
+	public static final ScreenElement COMMENT_POST = new ScreenElement("Comment, Post", "Post-Comment", findColor("COMMENT_POST"));
+	public static final ScreenElement COMMENT_PRE = new ScreenElement("Comment, Pre", "Pre-Comment", findColor("COMMENT_PRE"));
+	public static final ScreenElement LABELS_PRIMARY = new ScreenElement("Labels, Primary", findColor("LABELS_PRIMARY"));
+	public static final ScreenElement SEPARATOR = new ScreenElement("Separator", findColor("SEPARATOR"));
+	public static final ScreenElement VARIABLE = new ScreenElement("Variable", findColor("VARIABLE"));
+	public static final ScreenElement PARAMETER_CUSTOM = new ScreenElement("Parameter, Custom Storage", findColor("PARAMETER_CUSTOM"));
+	public static final ScreenElement PARAMETER_DYNAMIC = new ScreenElement("Parameter, Dynamic Storage", findColor("PARAMETER_DYNAMIC"));
+	public static final ScreenElement VERSION_TRAK = new ScreenElement("Version Track", findColor("VERSION_TRAK"));
+	public static final ScreenElement XREF = new ScreenElement("XRef", findColor("XREF"));
+	public static final ScreenElement XREF_OFFCUT = new ScreenElement("XRef, Offcut", findColor("XREF_OFFCUT"));
+	public static final ScreenElement XREF_READ = new ScreenElement("XRef Read", findColor("XREF_READ"));
+	public static final ScreenElement XREF_WRITE = new ScreenElement("XRef Write", findColor("XREF_WRITE"));
+	public static final ScreenElement XREF_OTHER = new ScreenElement("XRef Other", findColor("XREF_OTHER"));
+	public static final ScreenElement REGISTERS = new ScreenElement("Registers", findColor("REGISTERS"));
+	public static final ScreenElement UNDERLINE = new ScreenElement("Underline", findColor("UNDERLINE"));
 
 	static ScreenElement[] elements = { ADDRESS, BACKGROUND, BAD_REF_ADDR, BYTES, COMMENT_AUTO,
 		COMMENT_EOL, COMMENT_PLATE, COMMENT_POST, COMMENT_PRE, COMMENT_REPEATABLE,

@@ -15,20 +15,21 @@
  */
 package docking.widgets;
 
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import ghidra.docking.util.DockingWindowsLookAndFeelUtils;
+
+import resources.ResourceManager;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import ghidra.docking.util.DockingWindowsLookAndFeelUtils;
-import resources.ResourceManager;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import static javax.swing.BorderFactory.createEmptyBorder;
+import static ghidra.util.config.ReadConfigProperties.findColor;
 
 /**
  * Class that is a JButton that has an empty border and adds a mouse listener
@@ -109,15 +110,16 @@ public class EmptyBorderButton extends JButton {
 	}
 
 	public void setFocusBackground(){
-		setBackground(new Color(87, 92, 95));
+		setBackground(findColor("Button.background.focus"));
 	}
 
 	public void setPressBackground(){
-		setBackground(new Color(112, 117, 120));
+		setBackground(findColor("Button.background.pressed"));
 	}
 
 	public void clearBackground() {
-		setBackground(Color.DARK_GRAY);
+		setBackground(findColor("Button.background"));
+//		setBackground(new Color(0, 0, 0, 0));
 	}
 
 	public void clearBorder() {
