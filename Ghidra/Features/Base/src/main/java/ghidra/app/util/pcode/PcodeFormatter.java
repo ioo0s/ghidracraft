@@ -33,7 +33,7 @@ import ghidra.program.model.pcode.PcodeOp;
 import ghidra.program.model.pcode.Varnode;
 import ghidra.util.Msg;
 
-import static ghidra.util.config.ReadConfigProperties.findColor;
+import static ghidra.framework.ColorProperties.findColor;
 
 public class PcodeFormatter {
 

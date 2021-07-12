@@ -20,7 +20,7 @@ import java.awt.event.MouseEvent;
 
 import ghidra.framework.options.Options;
 
-import static ghidra.util.config.ReadConfigProperties.findColor;
+import static ghidra.framework.ColorProperties.findColor;
 
 /**
  * Contains miscellaneous defines used for options.

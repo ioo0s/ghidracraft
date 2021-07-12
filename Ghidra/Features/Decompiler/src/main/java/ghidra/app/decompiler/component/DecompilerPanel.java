@@ -55,7 +55,7 @@ import ghidra.util.bean.field.AnnotatedTextFieldElement;
 import ghidra.util.task.SwingUpdateManager;
 import util.CollectionUtils;
 
-import static ghidra.util.config.ReadConfigProperties.findColor;
+import static ghidra.framework.ColorProperties.findColor;
 
 /**
  * Class to handle the display of a decompiled function

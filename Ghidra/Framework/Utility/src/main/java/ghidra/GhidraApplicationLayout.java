@@ -50,7 +50,7 @@ public class GhidraApplicationLayout extends ApplicationLayout {
 		// Application properties
 		applicationProperties = new ApplicationProperties(applicationRootDirs);
 
-		// Configuration properties
+		// Color properties
 		colorProperties = new ColorProperties(applicationRootDirs);
 
 		// Application installation directory

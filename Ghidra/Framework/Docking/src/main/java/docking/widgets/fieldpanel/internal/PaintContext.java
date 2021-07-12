@@ -18,7 +18,7 @@ package docking.widgets.fieldpanel.internal;
 
 import java.awt.Color;
 
-import static ghidra.util.config.ReadConfigProperties.findColor;
+import static ghidra.framework.ColorProperties.findColor;
 
 /**
  * Miscellaneous information needed by fields to paint.

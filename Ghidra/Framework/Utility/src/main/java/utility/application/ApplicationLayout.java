@@ -57,11 +57,11 @@ public abstract class ApplicationLayout {
 	}
 
 	/**
-	 * Gets the configuration properties from the application layout
+	 * Gets the color properties from the application layout
 	 *
-	 * @return The configuration properties.  Should never be null.
+	 * @return The color properties.  Should never be null.
 	 */
-	public static final ColorProperties getConfigurationProperties() {
+	public static final ColorProperties getColorProperties() {
 		return colorProperties;
 	}
 

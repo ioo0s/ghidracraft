@@ -16,7 +16,7 @@
 package ghidra.app.decompiler;
 
 import static ghidra.GhidraOptions.*;
-import static ghidra.util.config.ReadConfigProperties.findColor;
+import static ghidra.framework.ColorProperties.findColor;
 
 import java.awt.Color;
 import java.awt.Font;

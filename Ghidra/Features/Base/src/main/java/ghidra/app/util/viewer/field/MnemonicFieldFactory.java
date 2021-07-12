@@ -38,16 +38,16 @@ import ghidra.program.util.MnemonicFieldLocation;
 import ghidra.program.util.ProgramLocation;
 import ghidra.util.HelpLocation;
 
-import static ghidra.util.config.ReadConfigProperties.findColor;
+import static ghidra.framework.ColorProperties.findColor;
 
 /**
   *  Generates Mnemonic Fields.
   */
 public class MnemonicFieldFactory extends FieldFactory {
 	public static final String FIELD_NAME = "Mnemonic";
-	public static final Color OVERRIDE_COLOR = findColor("Override");
+	public static final Color OVERRIDE_COLOR = findColor("Mnemonic.Override");
 // TODO: Should BAD_PROTOTYPE_COLOR be an option?
-	private final static Color BAD_PROTOTYPE_COLOR = findColor("ProtoType.Bad");
+	private final static Color BAD_PROTOTYPE_COLOR = findColor("Mnemonic.BadPrototype");
 	private final static String SHOW_UNDERLINE_FOR_REFERENCES =
 		GhidraOptions.MNEMONIC_GROUP_TITLE + Options.DELIMITER + "Underline Fields With References";
 

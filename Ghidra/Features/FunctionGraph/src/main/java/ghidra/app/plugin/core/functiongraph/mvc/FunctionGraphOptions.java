@@ -26,7 +26,7 @@ import ghidra.graph.viewer.options.*;
 import ghidra.program.model.symbol.FlowType;
 import ghidra.util.HelpLocation;
 
-import static ghidra.util.config.ReadConfigProperties.findColor;
+import static ghidra.framework.ColorProperties.findColor;
 
 public class FunctionGraphOptions extends VisualGraphOptions {
 

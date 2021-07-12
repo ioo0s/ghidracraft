@@ -16,9 +16,9 @@
 package ghidra.framework;
 
 import generic.jar.ResourceFile;
-import ghidra.util.NullOutputStream;
 import ghidra.util.SystemUtilities;
-import ghidra.util.config.PropertiesEnhance;
+import ghidra.util.config.NestedProperties;
+import utility.application.ApplicationLayout;
 
 import java.awt.*;
 import java.io.FileNotFoundException;
@@ -29,7 +29,7 @@ import java.util.Collection;
 import static ghidra.util.config.ColorHexConvert.toColorFromString;
 
 
-public class ColorProperties extends PropertiesEnhance {
+public class ColorProperties extends NestedProperties {
 
     /**
      * The name of the Color properties file.
@@ -99,8 +99,20 @@ public class ColorProperties extends PropertiesEnhance {
      * @param key Color.properties key
      * @return Color Object
      * */
-	public Color readColorFromProperties(String key) {
+	public Color readColor(String key) {
 		Color color = toColorFromString(getProperty(key));
 		return color;
 	}
+
+    /**
+     * Get Properties from ApplicationLayout.getColorProperties() by key
+     *
+     * @param key Color.properties key
+     * @return Color Object
+     * */
+    public static Color findColor(String key){
+        Color color = ApplicationLayout.getColorProperties().readColor(key);
+        return color;
+    }
+
 }

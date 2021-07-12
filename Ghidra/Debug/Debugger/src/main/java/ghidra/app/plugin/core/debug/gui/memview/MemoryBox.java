@@ -24,7 +24,7 @@ import com.google.common.collect.Range;
 
 import ghidra.program.model.address.AddressRange;
 
-import static ghidra.util.config.ReadConfigProperties.findColor;
+import static ghidra.framework.ColorProperties.findColor;
 
 public class MemoryBox {
 

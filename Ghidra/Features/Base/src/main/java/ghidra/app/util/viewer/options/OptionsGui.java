@@ -38,7 +38,7 @@ import docking.widgets.label.GDLabel;
 import ghidra.GhidraOptions;
 import ghidra.util.SystemUtilities;
 
-import static ghidra.util.config.ReadConfigProperties.findColor;
+import static ghidra.framework.ColorProperties.findColor;
 
 /**
  * Class for displaying and manipulating field colors and fonts.

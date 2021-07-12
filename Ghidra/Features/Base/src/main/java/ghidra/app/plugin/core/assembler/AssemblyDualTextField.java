@@ -46,7 +46,7 @@ import ghidra.program.util.ProgramLocation;
 import ghidra.util.NumericUtilities;
 import resources.ResourceManager;
 
-import static ghidra.util.config.ReadConfigProperties.findColor;
+import static ghidra.framework.ColorProperties.findColor;
 
 /**
  * A pair of text fields suitable for guided assembly

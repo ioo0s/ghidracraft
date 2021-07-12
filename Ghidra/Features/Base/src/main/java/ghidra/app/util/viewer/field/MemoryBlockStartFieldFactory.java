@@ -34,7 +34,7 @@ import ghidra.program.model.mem.MemoryBlockType;
 import ghidra.program.util.MemoryBlockStartFieldLocation;
 import ghidra.program.util.ProgramLocation;
 
-import static ghidra.util.config.ReadConfigProperties.findColor;
+import static ghidra.framework.ColorProperties.findColor;
 
 /**
   *  Generates a text label on each {@link CodeUnit} that marks the start of a memory block. The

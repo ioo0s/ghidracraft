@@ -30,7 +30,7 @@ import ghidra.program.model.listing.FunctionSignature;
 import ghidra.util.StringUtilities;
 import ghidra.util.UniversalID;
 
-import static ghidra.util.config.ReadConfigProperties.findColor;
+import static ghidra.framework.ColorProperties.findColor;
 
 /**
  * Panel to show the contents of a Data Type.

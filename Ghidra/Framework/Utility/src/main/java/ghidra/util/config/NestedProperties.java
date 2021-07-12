@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
  * Allow nested properties with ${} syntax
  * */
 
-public class PropertiesEnhance extends Properties {
+public class NestedProperties extends Properties {
 
     @Override
     public String getProperty(String key) {
@@ -44,7 +44,7 @@ public class PropertiesEnhance extends Properties {
     }
 
     /**
-     * Scape special regex characters （$()*+.[]?\^{},|）
+     * Escape special regex characters （$()*+.[]?\^{},|）
      */
     public String escapeExprSpecialWord(String keyword) {
         if (keyword != null && keyword.length() > 0) {
