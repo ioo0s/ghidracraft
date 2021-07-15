@@ -14,6 +14,16 @@
 #  limitations under the License.
 ##
 # Ghidra script for OLLVM control flow de flattening
+# This script can restore the obfuscated code compiled by the -fla parameter.
+#
+# Usage:
+#
+# 1.You need to select a state variable, usually at the head before the start of the loop.
+#
+# 2.The state variable is mainly used in the distributor, and then it is shown as assigning and judging the same variable in the loop,
+# e.g. local_14 = 0x6e36350b, then in the loop, local_14 will be judged and local_14 will be assigned.
+#
+# 3.Run the script after selecting the state variable.
 # @category Repair
 
 import os
