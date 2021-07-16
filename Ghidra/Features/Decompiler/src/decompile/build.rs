@@ -283,7 +283,10 @@ fn prepare() -> CompileOptions {
 
 fn main() {
     let compile_opts = prepare();
-    let sleigh_src_file = Path::new("src").join("bridge.rs");
+    #[cfg(debug_assertions)]
+    let sleigh_src_file = Path::new("src").join("bridge/debug.rs");
+    #[cfg(not(debug_assertions))]
+    let sleigh_src_file = Path::new("src").join("bridge/release.rs");
 
     let mut target = cxx_build::bridge(sleigh_src_file);
 

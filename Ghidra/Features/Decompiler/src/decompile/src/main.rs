@@ -19,6 +19,7 @@ use std::env;
 mod model;
 mod patch;
 mod bridge;
+#[cfg(debug_assertions)]
 mod cli;
 mod serde_int;
 
@@ -27,6 +28,7 @@ mod serde_int;
 #[clap(setting = AppSettings::ColoredHelp)]
 struct Opts {
     /// commandline debugging mode
+    #[cfg(debug_assertions)]
     #[clap(short, long)]
     cli_debug: bool,
     /// sleigh home (ghidra installation point), used in cli
@@ -40,7 +42,7 @@ struct Opts {
 fn main() {
 
     let opts: Opts = Opts::parse();
-
+    #[cfg(debug_assertions)]
     if opts.cli_debug {
         if opts.legacy {
             let args: Vec<_> = env::args().collect();
@@ -51,4 +53,7 @@ fn main() {
     } else {
         bridge::ffi::ghidra_process_main();
     }
+
+    #[cfg(not(debug_assertions))]
+    bridge::ffi::ghidra_process_main();
 }
