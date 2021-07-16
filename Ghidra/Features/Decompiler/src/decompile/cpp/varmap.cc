@@ -410,7 +410,7 @@ string ScopeLocal::buildVariableName(const Address &addr,
 				     Datatype *ct,
 				     int4 &index,uint4 flags) const
 {
-  bool shortname = glb->short_var_name;
+  bool shortname = glb->short_var_names;
   if (((flags & (Varnode::addrtied|Varnode::persist))==Varnode::addrtied) &&
       addr.getSpace() == space) {
     if (fd->getFuncProto().getLocalRange().inRange(addr,1)) {
