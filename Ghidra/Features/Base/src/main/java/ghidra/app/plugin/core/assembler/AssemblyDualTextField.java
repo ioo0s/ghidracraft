@@ -46,6 +46,8 @@ import ghidra.program.util.ProgramLocation;
 import ghidra.util.NumericUtilities;
 import resources.ResourceManager;
 
+import static ghidra.framework.ColorProperties.findColor;
+
 /**
  * A pair of text fields suitable for guided assembly
  * 
@@ -176,8 +178,8 @@ public class AssemblyDualTextField {
 		public AssemblyInstruction(String text, byte[] data, int preference) {
 			// TODO?: Description to display constructor tree information
 			super("", NumericUtilities.convertBytesToString(data, " "),
-				preference == 10000 ? new Color(100, 100, 209)
-						: preference == 5000 ? new Color(100, 100, 209) : new Color(75, 201, 75),
+				preference == 10000 ? findColor("AssemblyInstruction.10000")
+						: preference == 5000 ? findColor("AssemblyInstruction.5000") : findColor("AssemblyInstruction.other"),
 				-preference);
 			this.data = data;
 		}

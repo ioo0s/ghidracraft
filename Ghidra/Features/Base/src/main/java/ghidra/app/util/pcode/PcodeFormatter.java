@@ -33,6 +33,8 @@ import ghidra.program.model.pcode.PcodeOp;
 import ghidra.program.model.pcode.Varnode;
 import ghidra.util.Msg;
 
+import static ghidra.framework.ColorProperties.findColor;
+
 public class PcodeFormatter {
 
 	private static String EOL = System.getProperty("line.separator");
@@ -42,8 +44,8 @@ public class PcodeFormatter {
 
 	private FontMetrics metrics;
 
-	private static final Color BLUE = new Color(181, 197, 245);
-	private static final Color RED = new Color(251, 71, 71);
+	private static final Color BLUE = findColor("Pcode.Blue");
+	private static final Color RED = findColor("Pcode.Red");
 
 	private Color addressColor = OptionsGui.ADDRESS.getDefaultColor();
 	private Color registerColor = OptionsGui.REGISTERS.getDefaultColor();

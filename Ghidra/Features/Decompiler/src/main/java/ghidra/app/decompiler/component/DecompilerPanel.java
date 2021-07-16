@@ -55,13 +55,15 @@ import ghidra.util.bean.field.AnnotatedTextFieldElement;
 import ghidra.util.task.SwingUpdateManager;
 import util.CollectionUtils;
 
+import static ghidra.framework.ColorProperties.findColor;
+
 /**
  * Class to handle the display of a decompiled function
  */
 public class DecompilerPanel extends JPanel implements FieldMouseListener, FieldLocationListener,
 		FieldSelectionListener, ClangHighlightListener {
 
-	private final static Color NON_FUNCTION_BACKGROUND_COLOR_DEF = new Color(69, 29, 29);
+	private final static Color NON_FUNCTION_BACKGROUND_COLOR_DEF = findColor("Non.Function.Background");
 
 	// Default color for specially highlighted tokens
 	private final static Color SPECIAL_COLOR_DEF = new Color(255, 100, 0, 128);
