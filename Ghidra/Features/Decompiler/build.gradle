@@ -382,7 +382,7 @@ def getTargetArch() {
 
 	if (arch == "aarch64") {
 		return arch
-	} else if (arch == "amd64") {
+	} else if (arch == "amd64" || arch == "x86_64") {
 		return "x86_64"
 	} else {
 		throw new Exception("unsupported architecture ${arch}")
