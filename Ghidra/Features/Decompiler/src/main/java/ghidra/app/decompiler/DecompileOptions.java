@@ -16,6 +16,7 @@
 package ghidra.app.decompiler;
 
 import static ghidra.GhidraOptions.*;
+import static ghidra.framework.ColorProperties.findColor;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -93,6 +94,12 @@ public class DecompileOptions {
 			"and incrementer statements. Loop variable bounds are displayed as a formal -for- loop header";
 	private final static boolean ANALYZEFORLOOPS_OPTIONDEFAULT = true;	// Must match Architecture::resetDefaultsInternal
 	private boolean analyzeForLoops;
+
+	private final static String SHORTVARNAMES_OPTIONSTRING = "Analysis.Short variable names";
+	private final static String SHORTVARNAMES_OPTIONDESCRIPTION = 
+		"If set, the decompiler attempts to use shorter default variable names";
+	private final static boolean SHORTVARNAMES_OPTIONDEFAULT = false; // Must match Architecture::resetDefaultsInternal
+	private boolean shortVarNames;
 
 	private final static String NULLTOKEN_OPTIONSTRING = "Display.Print 'NULL' for null pointers";
 	private final static String NULLTOKEN_OPTIONDESCRIPTION =
@@ -299,50 +306,50 @@ public class DecompileOptions {
 	private final static IntegerFormatEnum INTEGERFORMAT_OPTIONDEFAULT = IntegerFormatEnum.BestFit;		// Must match PrintLanguage::resetDefaultsInternal
 	private IntegerFormatEnum integerFormat;
 
-	private final static Color HIGHLIGHT_MIDDLE_MOUSE_DEF = new Color(173, 214, 255, 38);
+	private final static Color HIGHLIGHT_MIDDLE_MOUSE_DEF = findColor("Highlight.Middle.Mouse");
 	private Color middleMouseHighlightColor;
 	private int middleMouseHighlightButton = MouseEvent.BUTTON2;
 
 	private final static String HIGHLIGHT_CURRENT_VARIABLE_MSG =
 		"Display.Color for Current Variable Highlight";
-	private final static Color HIGHLIGHT_CURRENT_VARIABLE_DEF = new Color(173, 214, 255, 38);
+	private final static Color HIGHLIGHT_CURRENT_VARIABLE_DEF = findColor("Highlight.Current.Variable");
 	private Color currentVariableHighlightColor;
 
 	private final static String HIGHLIGHT_KEYWORD_MSG = "Display.Color for Keywords";
-	private final static Color HIGHLIGHT_KEYWORD_DEF = Color.decode("0xC586C0");
+	private final static Color HIGHLIGHT_KEYWORD_DEF = findColor("Highlight.KeyWord");
 	private Color keywordColor;
 	private final static String HIGHLIGHT_FUNCTION_MSG = "Display.Color for Function names";
-	private final static Color HIGHLIGHT_FUNCTION_DEF = Color.decode("0xDCDCAA");
+	private final static Color HIGHLIGHT_FUNCTION_DEF = findColor("Highlight.Function");
 	private Color functionColor;
 	private final static String HIGHLIGHT_COMMENT_MSG = "Display.Color for Comments";
-	private final static Color HIGHLIGHT_COMMENT_DEF = Color.decode("0x6A9955");
+	private final static Color HIGHLIGHT_COMMENT_DEF = findColor("Highlight.Comment");
 	private Color commentColor;
 	private final static String HIGHLIGHT_VARIABLE_MSG = "Display.Color for Variables";
-	private final static Color HIGHLIGHT_VARIABLE_DEF = Color.decode("0x9CDCFE");
+	private final static Color HIGHLIGHT_VARIABLE_DEF = findColor("Highlight.Variable");
 	private Color variableColor;
 	private final static String HIGHLIGHT_CONST_MSG = "Display.Color for Constants";
-	private final static Color HIGHLIGHT_CONST_DEF = Color.decode("0x4FC1FF");
+	private final static Color HIGHLIGHT_CONST_DEF = findColor("Highlight.Const");
 	private Color constantColor;
 	private final static String HIGHLIGHT_TYPE_MSG = "Display.Color for Types";
-	private final static Color HIGHLIGHT_TYPE_DEF = Color.decode("0x4EC9B0");
+	private final static Color HIGHLIGHT_TYPE_DEF = findColor("Highlight.Type");
 	private Color typeColor;
 	private final static String HIGHLIGHT_PARAMETER_MSG = "Display.Color for Parameters";
-	private final static Color HIGHLIGHT_PARAMETER_DEF = Color.decode("0x9CDCFE");
+	private final static Color HIGHLIGHT_PARAMETER_DEF = findColor("Highlight.Parameter");
 	private Color parameterColor;
 	private final static String HIGHLIGHT_GLOBAL_MSG = "Display.Color for Globals";
-	private final static Color HIGHLIGHT_GLOBAL_DEF = Color.decode("0x569cd6");
+	private final static Color HIGHLIGHT_GLOBAL_DEF = findColor("Highlight.Global");
 	private Color globalColor;
 	private final static String HIGHLIGHT_DEFAULT_MSG = "Display.Color Default";
-	private final static Color HIGHLIGHT_DEFAULT_DEF = Color.WHITE;
+	private final static Color HIGHLIGHT_DEFAULT_DEF = findColor("Highlight.Default");
 	private Color defaultColor;
 
 	private static final String CODE_VIEWER_BACKGROUND_COLOR_MSG = "Display.Background Color";
-	private static final Color CODE_VIEWER_BACKGROUND_COLOR = new Color(56, 56, 56);
+	private static final Color CODE_VIEWER_BACKGROUND_COLOR = findColor("CodeViewer.Background");
 	private Color codeViewerBackgroundColor;
 
 	private static final String SEARCH_HIGHLIGHT_MSG =
 		"Display.Color for Highlighting Find Matches";
-	private static final Color SEARCH_HIGHLIGHT_DEF = Color.decode("0x5183cf");
+	private static final Color SEARCH_HIGHLIGHT_DEF = findColor("Search.Highlight");
 	private Color defaultSearchHighlightColor = SEARCH_HIGHLIGHT_DEF;
 
 	final static String FONT_MSG = "Display.Font";
@@ -377,6 +384,7 @@ public class DecompileOptions {
 		ignoreunimpl = IGNOREUNIMPL_OPTIONDEFAULT;
 		inferconstptr = INFERCONSTPTR_OPTIONDEFAULT;
 		analyzeForLoops = ANALYZEFORLOOPS_OPTIONDEFAULT;
+		shortVarNames = SHORTVARNAMES_OPTIONDEFAULT;
 		nullToken = NULLTOKEN_OPTIONDEFAULT;
 		inplaceTokens = INPLACEOP_OPTIONDEFAULT;
 		aliasBlock = ALIASBLOCK_OPTIONDEFAULT;
@@ -440,6 +448,8 @@ public class DecompileOptions {
 		inferconstptr = opt.getBoolean(INFERCONSTPTR_OPTIONSTRING, INFERCONSTPTR_OPTIONDEFAULT);
 		analyzeForLoops =
 			opt.getBoolean(ANALYZEFORLOOPS_OPTIONSTRING, ANALYZEFORLOOPS_OPTIONDEFAULT);
+		shortVarNames =
+			opt.getBoolean(SHORTVARNAMES_OPTIONSTRING, SHORTVARNAMES_OPTIONDEFAULT);
 		nullToken = opt.getBoolean(NULLTOKEN_OPTIONSTRING, NULLTOKEN_OPTIONDEFAULT);
 		inplaceTokens = opt.getBoolean(INPLACEOP_OPTIONSTRING, INPLACEOP_OPTIONDEFAULT);
 		aliasBlock = opt.getEnum(ALIASBLOCK_OPTIONSTRING, ALIASBLOCK_OPTIONDEFAULT);
@@ -724,6 +734,9 @@ public class DecompileOptions {
 		}
 		if (analyzeForLoops != ANALYZEFORLOOPS_OPTIONDEFAULT) {
 			appendOption(buf, "analyzeforloops", analyzeForLoops ? "on" : "off", "", "");
+		}
+		if (shortVarNames != SHORTVARNAMES_OPTIONDEFAULT) {
+			appendOption(buf, "shortvarnames", shortVarNames ? "on" : "off", "", "");
 		}
 		if (nullToken != NULLTOKEN_OPTIONDEFAULT) {
 			appendOption(buf, "nullprinting", nullToken ? "on" : "off", "", "");

@@ -5,6 +5,7 @@ Common/server/server.conf||GHIDRA||||END|
 Common/server/svrREADME.html||GHIDRA||||END|
 Common/support/analyzeHeadlessREADME.html||GHIDRA||||END|
 Common/support/buildGhidraJarREADME.txt||GHIDRA||||END|
+Common/support/Color.properties||GHIDRA||||END|
 Common/support/debug.log4j.xml||GHIDRA||||END|
 Common/support/launch.properties||GHIDRA||||END|
 Linux/ghidraRun||GHIDRA||||END|

@@ -24,6 +24,8 @@ import com.google.common.collect.Range;
 
 import ghidra.program.model.address.AddressRange;
 
+import static ghidra.framework.ColorProperties.findColor;
+
 public class MemoryBox {
 
 	protected String id;
@@ -35,7 +37,7 @@ public class MemoryBox {
 	protected long stopAddr = -1;
 	protected long startTime;
 	protected long stopTime = -1;
-	protected Color color = new Color(181, 197, 245);
+	protected Color color = findColor("Memory.Box");
 
 	protected int pixAstart;
 	protected int pixAend;

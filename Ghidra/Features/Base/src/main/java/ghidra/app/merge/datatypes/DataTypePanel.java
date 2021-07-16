@@ -30,6 +30,8 @@ import ghidra.program.model.listing.FunctionSignature;
 import ghidra.util.StringUtilities;
 import ghidra.util.UniversalID;
 
+import static ghidra.framework.ColorProperties.findColor;
+
 /**
  * Panel to show the contents of a Data Type.
  * 
@@ -105,28 +107,28 @@ class DataTypePanel extends JPanel {
 		offsetAttrSet = new SimpleAttributeSet();
 		offsetAttrSet.addAttribute(StyleConstants.FontFamily, "Monospaced");
 		offsetAttrSet.addAttribute(StyleConstants.FontSize, new Integer(12));
-		offsetAttrSet.addAttribute(StyleConstants.Foreground, Color.WHITE);
+		offsetAttrSet.addAttribute(StyleConstants.Foreground, findColor("Offset.Foreground"));
 
 		contentAttrSet = new SimpleAttributeSet();
 		contentAttrSet.addAttribute(StyleConstants.FontFamily, "Monospaced");
 		contentAttrSet.addAttribute(StyleConstants.FontSize, new Integer(12));
-		contentAttrSet.addAttribute(StyleConstants.Foreground, new Color(181, 197, 245));
+		contentAttrSet.addAttribute(StyleConstants.Foreground, findColor("Content.Foreground"));
 
 		fieldNameAttrSet = new SimpleAttributeSet();
 		fieldNameAttrSet.addAttribute(StyleConstants.FontFamily, "Monospaced");
 		fieldNameAttrSet.addAttribute(StyleConstants.FontSize, new Integer(12));
-		fieldNameAttrSet.addAttribute(StyleConstants.Foreground, new Color(209, 86, 209));
+		fieldNameAttrSet.addAttribute(StyleConstants.Foreground, findColor("FieldName.Foreground"));
 
 		commentAttrSet = new SimpleAttributeSet();
 		commentAttrSet.addAttribute(StyleConstants.FontFamily, "Monospaced");
 		commentAttrSet.addAttribute(StyleConstants.FontSize, new Integer(12));
-		commentAttrSet.addAttribute(StyleConstants.Foreground, new Color(77, 201, 108));
+		commentAttrSet.addAttribute(StyleConstants.Foreground, findColor("Comment.Foreground"));
 
 		deletedAttrSet = new SimpleAttributeSet();
 		deletedAttrSet.addAttribute(StyleConstants.FontFamily, "Tahoma");
 		deletedAttrSet.addAttribute(StyleConstants.FontSize, new Integer(12));
 		deletedAttrSet.addAttribute(StyleConstants.Bold, Boolean.TRUE);
-		deletedAttrSet.addAttribute(StyleConstants.Foreground, new Color(255, 112, 112));
+		deletedAttrSet.addAttribute(StyleConstants.Foreground, findColor("Deleted.Foreground"));
 
 		setDataType(dataType);
 	}

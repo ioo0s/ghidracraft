@@ -27,6 +27,8 @@ import ghidra.graph.viewer.options.VisualGraphOptions;
 import ghidra.program.model.symbol.FlowType;
 import ghidra.util.HelpLocation;
 
+import static ghidra.framework.ColorProperties.findColor;
+
 public class FunctionGraphOptions extends VisualGraphOptions {
 
 	protected static final String OWNER = FunctionGraphPlugin.class.getSimpleName();
@@ -85,20 +87,20 @@ public class FunctionGraphOptions extends VisualGraphOptions {
 		"Signals that any user color changes to a group vertex will apply that same color to " +
 			"all grouped vertices as well.";
 
-	public static final Color DEFAULT_VERTEX_BACKGROUND_COLOR = new Color(56, 56, 56);
-	public static final Color DEFAULT_GROUP_BACKGROUND_COLOR = new Color(48, 44, 61);
-	private static final Color HOVER_HIGHLIGHT_FALL_THROUGH_COLOR = new Color(255, 127, 127);
-	private static final Color HOVER_HIGHLIGHT_UNCONDITIONAL_COLOR = new Color(127, 127, 255);
-	private static final Color HOVER_HIGHLIGHT_CONDITIONAL_COLOR = new Color(93, 222, 117);
+	public static final Color DEFAULT_VERTEX_BACKGROUND_COLOR = findColor("Default.Vertex.Background");
+	public static final Color DEFAULT_GROUP_BACKGROUND_COLOR = findColor("Default.Group.Background");
+	private static final Color HOVER_HIGHLIGHT_FALL_THROUGH_COLOR = findColor("Hover.Highlight.Fall.Through");
+	private static final Color HOVER_HIGHLIGHT_UNCONDITIONAL_COLOR = findColor("Hover.Highlight.Unconditional");
+	private static final Color HOVER_HIGHLIGHT_CONDITIONAL_COLOR = findColor("Hover.Highlight.Conditional");
 
 	private Color defaultVertexBackgroundColor = DEFAULT_VERTEX_BACKGROUND_COLOR;
 
 	private boolean updateGroupColorsAutomatically = true;
 	private Color defaultGroupBackgroundColor = DEFAULT_GROUP_BACKGROUND_COLOR;
 
-	private Color fallthroughEdgeColor = new Color(222, 93, 93);
-	private Color unconditionalJumpEdgeColor = new Color(93, 102, 222);
-	private Color conditionalJumpEdgeColor = new Color(94, 201, 40);
+	private Color fallthroughEdgeColor = findColor("Edge.Fall.through");
+	private Color unconditionalJumpEdgeColor = findColor("Edge.Unconditional.Jump");
+	private Color conditionalJumpEdgeColor = findColor("Edge.Conditional.Jump");
 
 	private Color fallthroughEdgeHighlightColor = HOVER_HIGHLIGHT_FALL_THROUGH_COLOR;
 	private Color unconditionalJumpEdgeHighlightColor = HOVER_HIGHLIGHT_UNCONDITIONAL_COLOR;

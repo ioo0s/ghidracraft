@@ -20,6 +20,8 @@ import java.awt.event.MouseEvent;
 
 import ghidra.framework.options.Options;
 
+import static ghidra.framework.ColorProperties.findColor;
+
 /**
  * Contains miscellaneous defines used for options.
  */
@@ -156,7 +158,7 @@ public interface GhidraOptions {
 
 	final String HIGHLIGHT_CURSOR_LINE_COLOR = "Cursor." + HIGHLIGHT_CURSOR_LINE_COLOR_OPTION_NAME;
 
-	final Color DEFAULT_CURSOR_LINE_COLOR = new Color(42, 82, 133);
+	final Color DEFAULT_CURSOR_LINE_COLOR = findColor("Cursor.line.default");
 
 	final String HIGHLIGHT_CURSOR_LINE_OPTION_NAME = "Highlight Cursor Line";
 
@@ -190,10 +192,10 @@ public interface GhidraOptions {
 	// end cursor highlight
 
 	final String OPTION_SELECTION_COLOR = "Selection Colors.Selection Color";
-	final Color DEFAULT_SELECTION_COLOR = new Color(36, 69, 112);
+	final Color DEFAULT_SELECTION_COLOR = findColor("Selection");
 
 	final String OPTION_HIGHLIGHT_COLOR = "Selection Colors.Highlight Color";
-	final Color DEFAULT_HIGHLIGHT_COLOR = new Color(36, 69, 112);
+	final Color DEFAULT_HIGHLIGHT_COLOR = findColor("Selection");
 	final String APPLY_ENABLED = "apply.enabled";
 
 }
