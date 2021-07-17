@@ -1713,7 +1713,7 @@ Symbol *Scope::addConvertSymbol(uint4 format,uintb value,Address &addr,uint8 has
 string Scope::buildDefaultName(Symbol *sym,int4 &base,Varnode *vn) const
 
 {
-  bool shortname = glb->short_var_name;
+  bool shortname = glb->short_var_names;
   if (vn != (Varnode *)0 && !vn->isConstant()) {
     Address usepoint;
     if (!vn->isAddrTied() && fd != (Funcdata *)0)
@@ -2392,7 +2392,7 @@ string ScopeInternal::buildVariableName(const Address &addr,
 {
   ostringstream s;
   int4 sz = (ct == (Datatype *)0) ? 1 : ct->getSize();
-  bool shortname = glb->short_var_name;
+  bool shortname = glb->short_var_names;
 
   if ((flags & Varnode::unaffected)!=0) {
     if ((flags & Varnode::return_address)!=0)
