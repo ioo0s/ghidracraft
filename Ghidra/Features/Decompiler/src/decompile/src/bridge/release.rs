@@ -47,9 +47,6 @@ pub(crate) mod ffi {
         type AddrSpaceManager;
         type Architecture;
         type PcodeEmit;
-        type IfaceStatus;
-        type IfaceData;
-        type IfaceCommand;
         type StreamReader;
 
         fn ghidra_process_main();
@@ -77,14 +74,6 @@ pub(crate) mod ffi {
             out_var: UniquePtr<VarnodeData>,
             input_vars: &[UniquePtr<VarnodeData>],
             size: i32,
-        );
-
-        fn getModuleRust(self: &IfaceCommand) -> String;
-        fn createData(self: Pin<&mut IfaceCommand>) -> *mut IfaceData;
-        unsafe fn setData(
-            self: Pin<&mut IfaceCommand>,
-            root: *mut IfaceStatus,
-            data: *mut IfaceData,
         );
 
         fn read(self: Pin<&mut StreamReader>, buf: &mut [u8]) -> usize;

@@ -283,12 +283,12 @@ fn prepare() -> CompileOptions {
 
 fn main() {
     let compile_opts = prepare();
-    #[cfg(debug_assertions)]
-    let sleigh_src_file = Path::new("src").join("bridge/debug.rs");
     #[cfg(not(debug_assertions))]
-    let sleigh_src_file = Path::new("src").join("bridge/release.rs");
+    let bridges = vec![Path::new("src/bridge/release.rs")];
+    #[cfg(debug_assertions)]
+    let bridges = vec![Path::new("src/bridge/debug.rs"), Path::new("src/bridge/release.rs")];
 
-    let mut target = cxx_build::bridge(sleigh_src_file);
+    let mut target = cxx_build::bridges(&bridges);
 
     for obj in &compile_opts.objects {
         target.object(obj);

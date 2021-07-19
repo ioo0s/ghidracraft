@@ -25,20 +25,15 @@ unsafe impl ExternType for ffi::OpCode {
     type Kind = cxx::kind::Trivial;
 }
 
-// UGLY ALERT! These complex duplication is due to the lack of supporting
-// debug asserton (check for debug build) in #[cxx::bridge].
-// This should be resolved once cxx bridge support such conditional compilation.
 #[cfg(debug_assertions)]
 pub mod debug;
-
-#[cfg(debug_assertions)]
-pub use self::debug as ffi;
-
-#[cfg(not(debug_assertions))]
 pub mod release;
 
-#[cfg(not(debug_assertions))]
-pub use self::release as ffi;
+pub mod ffi {
+    pub use super::release::*;
+    #[cfg(debug_assertions)]
+    pub use super::debug::*;
+}
 
 struct RustReader<'a> {
     reader: Pin<&'a mut ffi::StreamReader>,

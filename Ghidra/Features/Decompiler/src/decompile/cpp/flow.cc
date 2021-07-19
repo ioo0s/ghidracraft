@@ -15,7 +15,7 @@
  */
 #include "flow.hh"
 
-#include "decompile/src/bridge.rs.h"
+#include "decompile/src/bridge/release.rs.h"
 
 /// Prepare for tracing flow for a new function.
 /// The Funcdata object and references to its internal containers must be explicitly given.
