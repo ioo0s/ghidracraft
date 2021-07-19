@@ -16,12 +16,9 @@
 use clap::{Clap, AppSettings};
 use std::env;
 
-mod model;
-mod patch;
-mod bridge;
+use ghidracraft::bridge;
 #[cfg(debug_assertions)]
-mod cli;
-mod serde_int;
+use ghidracraft::cli;
 
 #[derive(Clap)]
 #[clap(version = "1.0", author = "BinCraft Team")]

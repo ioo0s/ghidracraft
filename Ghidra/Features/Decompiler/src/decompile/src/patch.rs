@@ -14,11 +14,21 @@
  * limitations under the License.
  */
 
-use crate::bridge::ffi;
-use crate::model::Address;
+use crate::bridge::ffi::{self};
 use cxx::{let_cxx_string, CxxString, UniquePtr};
 use serde::{Deserialize, Serialize};
 use std::convert::TryInto;
+
+/// Address for serializing the patch info.
+/// This is a temporary solution before rewrite the ser/de system in C++ and Java.
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename = "addr")]
+struct Address {
+    pub space: String,
+    #[serde(with = "crate::serde_int")]
+    pub offset: usize,
+}
+
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename = "patch")]

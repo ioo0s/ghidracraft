@@ -17,13 +17,9 @@
 use cxx::{type_id, ExternType};
 use std::io::Read;
 use std::pin::Pin;
+use pcodecraft::{Address, Varnode};
 
 use crate::patch::Patches;
-
-unsafe impl ExternType for ffi::OpCode {
-    type Id = type_id!("OpCode");
-    type Kind = cxx::kind::Trivial;
-}
 
 #[cfg(debug_assertions)]
 pub mod debug;
@@ -33,6 +29,28 @@ pub mod ffi {
     pub use super::release::*;
     #[cfg(debug_assertions)]
     pub use super::debug::*;
+}
+
+impl Address for ffi::Address {
+    fn space(&self) -> String {
+        unsafe {
+            self.getSpace().as_ref().unwrap().getName().to_string()
+        }
+    }
+
+    fn offset(&self) -> u64 {
+        self.getOffset() as u64
+    }
+
+    fn debug_print(&self) -> String {
+        format!("address({}, 0x{:x})", self.space(), self.offset())
+    }
+}
+
+impl std::fmt::Debug for ffi::Address {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}", self.debug_print())
+    }
 }
 
 struct RustReader<'a> {

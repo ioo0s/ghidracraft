@@ -40,7 +40,7 @@ pub(crate) mod ffi {
         include!("ruststream.hh");
         include!("ghidra_process.hh");
 
-        type OpCode = crate::model::OpCode;
+        type OpCode = pcodecraft::OpCode;
         type Address;
         type AddrSpace;
         type VarnodeData;

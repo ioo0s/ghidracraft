@@ -1,7 +1,7 @@
 [package]
-name = "decompile"
+name = "ghidracraft"
 version = "0.1.0"
-authors = ["Anciety <anciety@starcross.cn>"]
+authors = ["Anciety <anciety@starcross.tech>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -15,7 +15,15 @@ serde = { version = "1.0", features = ["derive"] }
 serde-xml-rs = "0.4"
 parse_int = "0.5"
 num-traits = "0.2"
+pcodecraft = { git = "https://github.com/StarCrossPortal/pcodecraft.git", features = ["ghidra"] }
 
 [build-dependencies]
 cxx-build = "1.0"
 filetime = "0.2"
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "decompile"
+path = "src/main.rs"

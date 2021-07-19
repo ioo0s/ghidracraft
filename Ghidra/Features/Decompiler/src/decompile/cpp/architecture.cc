@@ -24,7 +24,7 @@
 #include <cmath>
 #endif
 
-#include "decompile/src/bridge/release.rs.h"
+#include "ghidracraft/src/bridge/release.rs.h"
 #include "rust/cxx.h"
 
 vector<ArchitectureCapability *> ArchitectureCapability::thelist;

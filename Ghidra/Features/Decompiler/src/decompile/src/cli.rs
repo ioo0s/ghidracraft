@@ -97,7 +97,7 @@ fn init_decompiler(sleigh_home: Option<String>) {
     ffi::startDecompilerLibrary(&ghidra_root);
 }
 
-pub(crate) fn cli_main(sleigh_home: Option<String>) {
+pub fn cli_main(sleigh_home: Option<String>) {
     init_decompiler(sleigh_home);
 
 
