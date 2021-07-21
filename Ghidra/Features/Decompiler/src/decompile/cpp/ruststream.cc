@@ -17,9 +17,10 @@
 #include "ruststream.hh"
 #include <memory>
 #include <vector>
+#include <stdint.h>
 
 std::size_t StreamReader::read(rust::Slice<uint8_t> buf) {
-    uint size = 0;
+    unsigned int size = 0;
     char c;
     while (size < buf.size() && stream.get(c)) {
         buf[size] = c;

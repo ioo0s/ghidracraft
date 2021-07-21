@@ -44,7 +44,7 @@ public class NestedProperties extends Properties {
     }
 
     /**
-     * Escape special regex characters （$()*+.[]?\^{},|）
+     * Escape special regex characters ($()*+.[]?\^{},|)
      */
     public String escapeExprSpecialWord(String keyword) {
         if (keyword != null && keyword.length() > 0) {

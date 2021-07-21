@@ -65,7 +65,6 @@ public class ColorProperties extends NestedProperties {
      * @throws IOException If there was a problem loading/reading a discovered properties file.
      */
     public ColorProperties(Collection<ResourceFile> applicationRootDirs) throws IOException {
-        boolean found = false;
         // Application installation directory
         ResourceFile applicationInstallationDir = applicationRootDirs.iterator().next().getParentFile();
         if (SystemUtilities.isInDevelopmentMode()) {
@@ -74,7 +73,6 @@ public class ColorProperties extends NestedProperties {
                 if (colorPropertiesFile.exists()) {
                     try (InputStream in = colorPropertiesFile.getInputStream()) {
                         load(in);
-                        found = true;
                     }
                 }
             }
@@ -84,12 +82,8 @@ public class ColorProperties extends NestedProperties {
             if (colorPropertiesFile.exists()) {
                 try (InputStream in = colorPropertiesFile.getInputStream()) {
                     load(in);
-                    found = true;
                 }
             }
-        }
-        if (!found) {
-            throw new IOException(COLOR_PROPERTY_NAME + " was not found!");
         }
     }
 

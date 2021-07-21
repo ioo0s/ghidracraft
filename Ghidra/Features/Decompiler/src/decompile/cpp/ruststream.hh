@@ -17,7 +17,7 @@
 #ifndef __RUSTSTREAM__
 #define __RUSTSTREAM__
 
-#include <istream>
+#include <iostream>
 #include "rust/cxx.h"
 
 // Rust reader adapters adapts to internal stream

@@ -91,6 +91,7 @@ const DECOMPILER_SOURCE_BASE_CXX: &[&str] = &[
     "comment_ghidra.cc",
     "string_ghidra.cc",
     "xml.cc",
+    "ruststream.cc"
 ];
 
 const DECOMPILER_YACC: &[&'static str] = &["xml.y", "grammar.y"];
@@ -121,7 +122,6 @@ const CLI_CXX: &[&'static str] = &[
     "ifacedecomp.cc",
     "grammar.cc",
     "callgraph.cc",
-    "ruststream.cc",
     "xml_arch.cc",
     "loadimage_xml.cc"
 ];
