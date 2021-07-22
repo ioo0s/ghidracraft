@@ -16,9 +16,11 @@
 use clap::{Clap, AppSettings};
 use std::env;
 
-use ghidracraft::bridge;
+pub mod patch;
+pub mod bridge;
 #[cfg(debug_assertions)]
-use ghidracraft::cli;
+pub mod cli;
+mod serde_int;
 
 #[derive(Clap)]
 #[clap(version = "1.0", author = "BinCraft Team")]
