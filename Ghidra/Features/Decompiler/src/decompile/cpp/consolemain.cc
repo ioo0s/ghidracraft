@@ -79,7 +79,7 @@ void IfcLoadFile::execute(istream &s)
   if (capa->getName() == "xml")		// If file is xml
     dcp->conf->readLoaderSymbols("::"); // Read in loader symbols
 #ifdef OPACTION_DEBUG
-  dcp->conf->setDebugStream(status->optr);
+  dcp->conf->setDebugStream(status->fileoptr);
 #endif
   *status->optr << filename << " successfully loaded: " << dcp->conf->getDescription() << endl;
 }
@@ -141,7 +141,7 @@ void IfcRestore::execute(istream &s)
   }
   
 #ifdef OPACTION_DEBUG
-  dcp->conf->setDebugStream(status->optr);
+  dcp->conf->setDebugStream(status->fileoptr);
 #endif
   *status->optr << savefile << " successfully loaded: " << dcp->conf->getDescription() << endl;
 }
