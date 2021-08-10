@@ -292,11 +292,6 @@ public class DWARFFunctionImporter {
 				// don't force the method to have an empty param signature because there are other
 				// issues afoot.
 				skipFuncSignature = true;
-			} else if (formalParams.isEmpty() && dwarfLanguage == (Number) DWARFSourceLanguage.DW_LANG_Rust) {
-				// if there were no defined parameters and the language is Rust, don't force an
-				// empty param signature. Rust language emit dwarf info without types (signatures)
-				// when used without -g.
-				skipFuncSignature = true;
 			}
 			else if (formalParams.isEmpty() && diea.getCompilationUnit()
 					.getCompileUnit()
