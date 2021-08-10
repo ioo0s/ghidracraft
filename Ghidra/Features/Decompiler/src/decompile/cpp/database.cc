@@ -2489,7 +2489,7 @@ string ScopeInternal::buildVariableName(const Address &addr,
       s << "Var" << dec << index++;
     }
     if (findFirstByName(s.str()) != nametree.end()) {	// If the name already exists
-      for(int4 i=0;i<10;++i) {	// Try bumping up the index a few times before calling makeNameUnique
+      for(int4 i=0;i<index+1;++i) {	// Try bumping up the index a few times before calling makeNameUnique
 	      ostringstream s2;
         if (shortname) {
 	        s2 << "v" << dec << index++;
