@@ -419,8 +419,7 @@ string ScopeLocal::buildVariableName(const Address &addr,
       if (stackGrowsNegative)
 	      start = -start;
       ostringstream s;
-      if(shortname)
-      {
+      if (shortname) {
         string spacename = addr.getSpace()->getName();
         s << spacename[0] << index++;
         if (start <= 0) {
@@ -429,7 +428,7 @@ string ScopeLocal::buildVariableName(const Address &addr,
         }
         if (findFirstByName(s.str()) != nametree.end()) {	// If the name already exists
           for(int4 i=0;i<index+1;++i) {	// Try bumping up the index a few times before calling makeNameUnique
-	        ostringstream s2;
+	          ostringstream s2;
 	          s2 << spacename[0] << dec << index++;
 	          if (findFirstByName(s2.str()) == nametree.end()) {
               return s2.str();
@@ -438,18 +437,18 @@ string ScopeLocal::buildVariableName(const Address &addr,
         }
         return makeNameUnique(s.str());
       }
-      else{
+      else {
         if (ct != (Datatype *)0)
 	        ct->printNameBase(s);
-      string spacename = addr.getSpace()->getName();
-      spacename[0] = toupper(spacename[0]);
-      s << spacename;
-      if (start <= 0) {
-	      s << 'X';		// Indicate local stack space allocated by caller
-      	start = -start;
-      }
-      s << dec << start;
-      return makeNameUnique(s.str());
+        string spacename = addr.getSpace()->getName();
+        spacename[0] = toupper(spacename[0]);
+        s << spacename;
+        if (start <= 0) {
+	        s << 'X';		// Indicate local stack space allocated by caller
+      	  start = -start;
+        }
+        s << dec << start;
+        return makeNameUnique(s.str());
       }
     }
   }

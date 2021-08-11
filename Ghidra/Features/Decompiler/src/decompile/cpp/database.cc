@@ -1721,7 +1721,7 @@ string Scope::buildDefaultName(Symbol *sym,int4 &base,Varnode *vn) const
     HighVariable *high = vn->getHigh();
     if (sym->getCategory() == 0 || high->isInput()) {
       int4 index = -1;
-      if(shortname){
+      if (shortname) {
         index = 1;
       }
       if (sym->getCategory()==0)
@@ -2414,7 +2414,7 @@ string ScopeInternal::buildVariableName(const Address &addr,
     if (!spacename.empty())
       s << spacename;
     else {
-      if(!shortname){
+      if (!shortname) {
         if (ct != (Datatype *)0)
 	        ct->printNameBase(s);
       }
@@ -2453,7 +2453,7 @@ string ScopeInternal::buildVariableName(const Address &addr,
     }
   }
   else if ((flags & Varnode::addrtied)!=0) {
-    if(!shortname){
+    if (!shortname) {
       if (ct != (Datatype *)0)
 	      ct->printNameBase(s);
     }
