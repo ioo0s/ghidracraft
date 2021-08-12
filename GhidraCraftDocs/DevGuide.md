@@ -62,6 +62,7 @@ Due to ghidra self reason, every time you modified source code, be sure to run `
 
 ### Q & A
 1. Q: Why can't I find the python shell in Ghidracraft and I can't run the Python script?
+
 A: All classes of ghidracraft not compiled, So before debugging and running, first use the `gradle classes` command to build all classes.
 ## VSCode Dev Setup
 
