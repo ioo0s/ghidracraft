@@ -2416,7 +2416,7 @@ string ScopeInternal::buildVariableName(const Address &addr,
     else {
       if (!shortname) {
         if (ct != (Datatype *)0)
-	        ct->printNameBase(s);
+          ct->printNameBase(s);
       }
       spacename = addr.getSpace()->getName();
       spacename[0] = toupper( spacename[0] ); // Capitalize space
@@ -2443,19 +2443,18 @@ string ScopeInternal::buildVariableName(const Address &addr,
         s << "in_" << regname;
       }
     }
-
   }
   else if ((flags & Varnode::input)!=0) { // Regular parameter
     if (shortname) {
       s << "p" << dec << index;
     } else {
-    s << "param_" << dec << index;
+      s << "param_" << dec << index;
     }
   }
   else if ((flags & Varnode::addrtied)!=0) {
     if (!shortname) {
       if (ct != (Datatype *)0)
-	      ct->printNameBase(s);
+        ct->printNameBase(s);
     }
     string spacename = addr.getSpace()->getName();
     spacename[0] = toupper( spacename[0] ); // Capitalize space
@@ -2466,7 +2465,7 @@ string ScopeInternal::buildVariableName(const Address &addr,
   else if ((flags & Varnode::indirect_creation)!=0) {
     string regname;
     regname = glb->translate->getRegisterName(addr.getSpace(),addr.getOffset(),sz);
-     if (shortname) {
+    if (shortname) {
       s << "eo";
       if (!regname.empty())
         s << regname;
@@ -2490,15 +2489,15 @@ string ScopeInternal::buildVariableName(const Address &addr,
     }
     if (findFirstByName(s.str()) != nametree.end()) {	// If the name already exists
       for(int4 i=0;i<index+1;++i) {	// Try bumping up the index a few times before calling makeNameUnique
-	      ostringstream s2;
+        ostringstream s2;
         if (shortname) {
-	        s2 << "v" << dec << index++;
+          s2 << "v" << dec << index++;
         } else {
           if (ct != (Datatype *)0)
-	          ct->printNameBase(s2);
-	        s2 << "Var" << dec << index++;
+            ct->printNameBase(s2);
+          s2 << "Var" << dec << index++;
         }
-	      if (findFirstByName(s2.str()) == nametree.end()) {
+        if (findFirstByName(s2.str()) == nametree.end()) {
           return s2.str();
         }
       }
