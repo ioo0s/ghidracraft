@@ -76,9 +76,20 @@ The minimal `launch.json` file you need is:
 If you already have configurations, just add that configuration object to the "configurations" then
 everything will do.
 
-3. compile the classes by `gradle classes`. If you want decompiler support, run `gradle buildNatives_XXX`
+3. compile the decompiler by running `gradle buildNatives_XXX`
 to build the decompiler. The actual value of `xxx` is platform dependant, can be `win64`, `linux64` or
 `osx64`.
+4. compile the classes by `gradle classes`.
+5. **manually copy the decompile binary**. To do this, go to `Ghidra/Features/Decompiler/src/decompile`,
+copy `target/release/x86_64-XXXXX/decompile` (XXX depends on your build environment, under linux, this is
+`x86_64-unknown-linux-gnu`) to `../../build/os/XXXX` (XXX depends on your environment, under linux,
+this is `linux64`, `win64` and `osx64` are also possible).
+Note that, if you haven't modified the decompiler code (either Rust or C++) you do this only once.
+Or else, every time you modified that, you should do this again to make sure it goes to the correct
+dir where Ghidra could find.
+
+This is debug/test only solution, if you use `buildGhidra`, this is automatic.
+
 4. Open up the `run and debug` menu in VSCode, choose the "Launch Ghidra" option, then click "run"
 
 ![run and debug in vscode](./ghidracraft/imgs/DevGuide/vscode_debug.png)
