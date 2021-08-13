@@ -136,11 +136,28 @@ void PrintLanguage::pushOp(const OpToken *tok,const PcodeOp *op)
   }
   else {
     emitOp(revpol.back());
+    ReversePolish &top( revpol.back() );
+    const OpToken *topToken = top.tok;
     paren = parentheses(tok);
-    if (paren)
+    if (paren) {
       id = emit->openParen('(');
-    else
-      id = emit->openGroup();
+    }
+    else {
+      if(topToken->precedence < tok->precedence 
+        && topToken->precedence != 2 
+        && topToken->precedence != 10
+        && topToken->precedence != 14
+        && topToken->precedence != 38
+        && topToken->precedence != 66
+        && tok->precedence != 62
+        && tok->precedence != 66) {
+        id = emit->openParen('(');
+        paren = true;
+      }
+      else {
+        id = emit->openGroup();
+      }
+    }
   }
   revpol.emplace_back();
   revpol.back().tok = tok;
