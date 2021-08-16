@@ -83,6 +83,12 @@ public class EquateTest extends AbstractDecompilerTest {
 			case EquateSymbol.FORMAT_HEX:
 				action = new ConvertHexAction(decompiler);
 				break;
+			case EquateSymbol.FORMAT_DOUBLE:
+				action = new ConvertDoubleAction(decompiler);
+				break;
+			case EquateSymbol.FORMAT_FLOAT:
+				action = new ConvertFloatAction(decompiler);
+				break;
 			default:
 				action = null;
 		}

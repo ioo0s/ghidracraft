@@ -1,4 +1,4 @@
-/* ###
+ /* ###
  * IP: GHIDRA
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -894,6 +894,12 @@ public class DecompilerProvider extends NavigatableComponentProviderAdapter
 		ConvertCharAction convertCharAction = new ConvertCharAction(plugin);
 		setGroupInfo(convertCharAction, convertGroup, subGroupPosition++);
 
+		ConvertFloatAction convertFloatAction = new ConvertFloatAction(plugin);
+		setGroupInfo(convertFloatAction, convertGroup, subGroupPosition++);
+
+		ConvertDoubleAction convertDoubleAction = new ConvertDoubleAction(plugin);
+		setGroupInfo(convertDoubleAction, convertGroup, subGroupPosition++);
+
 		//
 		// Comments
 		//
@@ -971,6 +977,8 @@ public class DecompilerProvider extends NavigatableComponentProviderAdapter
 		addLocalAction(convertHexAction);
 		addLocalAction(convertOctAction);
 		addLocalAction(convertCharAction);
+		addLocalAction(convertFloatAction);
+		addLocalAction(convertDoubleAction);
 		addLocalAction(setEquateAction);
 		addLocalAction(removeEquateAction);
 		addLocalAction(retypeLocalAction);

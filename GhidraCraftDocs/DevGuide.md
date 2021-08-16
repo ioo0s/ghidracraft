@@ -21,8 +21,49 @@ dev guide.
 
 ## IntelliJ IDEA Dev Setup
 
-TODO
+### Environment configuration
 
+1. prepare the dev env (follows [Orignal DevGuide](../DevGuide.md))
+```bash
+   gradle --init-script gradle/support/fetchDependencies.gradle init
+   gradle prepDev
+   gradle buildNatives_osx64
+   gradle eclipse
+```
+Select build parameters according to the current system, `buildNatives_linux64`, `buildNatives_win64`, `buildNatives_osx64`.
+
+### Configure IDEA startup environment
+1. Start IDEA and open the `ghidracraft` project.
+   
+   ![open_ghidracraft_in_IDEA](ghidracraft/imgs/DevGuide/idea_config_setup_1.png)
+2. Select gradle project to start, then select `File` => `New` => `Project from Existing Sources`. Select ghidracraft directory and `Import project from external model`, choose eclipse.
+   
+   ![choose_next](ghidracraft/imgs/DevGuide/idea_config_setup_2.png)
+3. The default configuration does not need to be modified
+
+   ![choose_next](ghidracraft/imgs/DevGuide/idea_config_setup_3.png)
+
+Now you can modify or read ghidra in IDEA more friendly.
+
+### Debugging Support
+1. create configuration for ghidracraft, select `ADD CONFIGURATION` => `Add new` => `Application` to create.
+2. Refer to the following configuration information for configuration
+``` bash
+   JDK: 11 or higher
+   -cp: ghidra.Utility
+   vm option: -Djava.system.class.loader=ghidra.GhidraClassLoader -DbinaryPath=build/classes/java/main:build/resources/main/:bin/default/::src/main/resources/
+   Main class: ghidra.GhidraLauncher
+   program argument: ghidra.GhidraRun
+```
+Note: If the vm option parameter is not visible, you can check the vm option in the modify option.
+![choose_next](ghidracraft/imgs/DevGuide/idea_config_debug.png)
+
+Due to ghidra self reason, every time you modified source code, be sure to run `gradle classes` before running.
+
+### Q & A
+1. Q: Why can't I find the python shell in Ghidracraft and I can't run the Python script?
+
+A: All classes of ghidracraft not compiled, So before debugging and running, first use the `gradle classes` command to build all classes.
 ## VSCode Dev Setup
 
 ### Language Server Support

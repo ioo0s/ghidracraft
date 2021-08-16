@@ -25,7 +25,9 @@ are used to indicate which block is to execute next.
 This step requires you to highlight out (by click mouse left-button on the number) the
 first magic number.
 
-TODO: add example
+Normally the magic number will appear above the beginning of the loop.
+
+![ollvm_choose_magic number](./imgs/ollvm_deob/ollvm_magic_number_choose.png)
 
 ### Step 3: run the script
 
@@ -33,7 +35,14 @@ By double clicking the script, it should deobfuscate the control flow flatening.
 
 ## Supported Architectures
 
-TODO: list the supported architectures
+|Arch Names|Support|
+|----------|-----------|
+|x86|✔️|
+|x86-64|✔️|
+|arm|✔️|
+|aarch64|✔️|
+|mips64|✔️|
+|ppc64-le|✔️|
 
 ## Note
 

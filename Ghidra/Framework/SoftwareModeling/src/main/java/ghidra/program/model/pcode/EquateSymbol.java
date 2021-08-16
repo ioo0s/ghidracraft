@@ -93,6 +93,12 @@ public class EquateSymbol extends HighSymbol {
 				case "bin":
 					convert = FORMAT_BIN;
 					break;
+				case "double":
+					convert = FORMAT_DOUBLE;
+					break;
+				case "float":
+					convert = FORMAT_FLOAT;
+					break;
 			}
 		}
 		parser.start("value");
