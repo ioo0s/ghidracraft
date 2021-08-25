@@ -14,7 +14,7 @@ on:
     - cron: '0 8 * * *'
 jobs:
   build:
-    name: 'Build Ghidracraft - ${{ matrix.platform.os }} - ${{ matrix.ghidra.version }}'
+    name: 'Build Ghidracraft - ${{ matrix.platform.os }} - ${{ matrix.ghidracraft.version }}'
     strategy:
       fail-fast: false
       matrix:
@@ -31,10 +31,10 @@ jobs:
               ren "C:\ProgramData\chocolatey\bin\win_flex.exe" "flex.exe"
 
         ghidracraft:
-          - version: 'dev'
-            ref: 'master'
           - version: 'stable'
-            ref: 'stable'
+            ref: 'master'
+          - version: 'dev'
+            ref: 'build'
     runs-on: "${{ matrix.platform.os }}"
     steps:
       - uses: actions/checkout@v2
@@ -43,9 +43,12 @@ jobs:
         with:
           java-version: '11'
           java-package: 'jdk'
+      - name: 'Install Rust related dependencies'
+          run: |
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+            source ~/.cargo/env
       - name: "Install dependencies"
         run: "${{ matrix.platform.dependency_script }}"
-
       - name: "Clone ghidracraft"
         run: git clone -b "${{ matrix.ghidra.ref }}" "https://github.com/StarCrossPortal/ghidracraft.git" ghidracraft
       #- name: "Apply patches"
