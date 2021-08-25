@@ -43,10 +43,10 @@ jobs:
         with:
           java-version: '11'
           java-package: 'jdk'
-      - name: 'Install Rust related dependencies'
-        run: |
-            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-            source ~/.cargo/env
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
       - name: "Install dependencies"
         run: "${{ matrix.platform.dependency_script }}"
       - name: "Clone ghidracraft"
