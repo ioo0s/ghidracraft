@@ -50,7 +50,7 @@ jobs:
       - name: "Install dependencies"
         run: "${{ matrix.platform.dependency_script }}"
       - name: "Clone ghidracraft"
-        run: git clone -b "${{ matrix.ghidra.ref }}" "https://github.com/StarCrossPortal/ghidracraft.git" ghidracraft
+        run: git clone -b "${{ matrix.ghidracraft.ref }}" "https://github.com/StarCrossPortal/ghidracraft.git" ghidracraft
       #- name: "Apply patches"
       #  run: git apply ../patches/*
       #  working-directory: ./ghidracraft
@@ -81,19 +81,15 @@ jobs:
       - name: "Building ghidracraft ${{ matrix.ghidracraft.version }} from ${{ matrix.ghidracraft.ref }}"
         uses: eskatos/gradle-command-action@v1
         with:
-          build-root-directory: ghidra
+          build-root-directory: ghidracraft
           gradle-version: 7.0.2
           arguments: --console plain --quiet buildGhidra
 
       - name: "Upload package"
         uses: NyaMisty/upload-artifact@nightly
         with:
-          name: "Ghidra_${{ matrix.ghidra.version }}_${{ matrix.platform.os }}"
-          path: "ghidra/build/dist/*.zip"
-      #- name: "Upload package"
-      #  uses: NyaMisty/upload-artifact-as-is@nightly
-      #  with:
-      #    path: ghidra/build/dist/
+          name: "Ghidracraft_${{ matrix.ghidracraft.version }}_${{ matrix.platform.os }}"
+          path: "ghidracraft/build/dist/*.zip"
   deploy:
     name: 'Push to Release'
     if: always()
