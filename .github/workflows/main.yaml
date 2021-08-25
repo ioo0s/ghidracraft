@@ -33,8 +33,6 @@ jobs:
         ghidracraft:
           - version: 'stable'
             ref: 'master'
-          - version: 'dev'
-            ref: 'build'
     runs-on: "${{ matrix.platform.os }}"
     steps:
       - uses: actions/checkout@v2
