@@ -76,7 +76,7 @@ jobs:
         with:
           build-root-directory: ghidracraft
           gradle-version: 7.0.2
-          arguments: --console plain --quiet --init-script ghidracraft/support/fetchDependencies.gradle init
+          arguments: --console plain --quiet -I gradle/support/fetchDependencies.gradle init
 
       - name: "Building ghidracraft ${{ matrix.ghidracraft.version }} from ${{ matrix.ghidracraft.ref }}"
         uses: eskatos/gradle-command-action@v1
