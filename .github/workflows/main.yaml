@@ -116,4 +116,4 @@ jobs:
           commit: ${{ github.sha }}
           tag: "GhidraNightlyBuild-${{ steps.date.outputs.date }}"
           artifacts: "dist1/*.zip"
-          token: ${{ ghidracraft.GHIDRACRAFT }}
+          token: ${{ secrets.GHIDRACRAFT }}
