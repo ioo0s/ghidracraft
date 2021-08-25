@@ -31,7 +31,7 @@ jobs:
               ren "C:\ProgramData\chocolatey\bin\win_flex.exe" "flex.exe"
 
         ghidracraft:
-          - version: 'stable'
+          - version: 'nightly'
             ref: 'master'
     runs-on: "${{ matrix.platform.os }}"
     steps:
