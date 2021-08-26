@@ -411,7 +411,7 @@ task win64BuildDecompilerRust(type: Exec) {
 
         copy {
             from "$workingDir/target/${target}/release/${binary}"
-            into "build/os/win64/"
+            into "../../build/os/win64/"
         }
     }
 }
@@ -433,11 +433,11 @@ task linux64BuildDecompilerRust(type: Exec) {
 
     doLast {
 
-        def binary = "decompile"
+        def binary = 'decompile'
 
         copy {
-            from "$workingDir/target/${target}/release/$binary"
-            into "build/os/linux64/"
+            from "$workingDir/target/${target}/release/${binary}"
+            into "../../build/os/linux64/"
         }
     }
 }
@@ -463,7 +463,7 @@ task osx64BuildDecompilerRust(type: Exec) {
 
         copy {
             from "$workingDir/target/${target}/release/${binary}"
-            into "build/os/osx64/"
+            into "../../build/os/osx64/"
         }
     }
 }
