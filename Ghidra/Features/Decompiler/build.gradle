@@ -430,7 +430,7 @@ task linux64BuildDecompilerRust(type: Exec) {
 	def target = "${arch}-unknown-linux-gnu"
 
 	commandLine 'cargo', 'build', '--release', '--target', target
-	commandLine "ls"
+	commandLine "ls", "../"
     doLast {
 
         def binary = 'decompile'
