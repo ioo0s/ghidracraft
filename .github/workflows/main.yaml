@@ -19,10 +19,10 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-#          - os: 'ubuntu-latest'
-#            dependency_script: "sudo apt-get update && sudo apt-get install -y bison flex binutils-dev"
-          - os: 'macos-latest'
-            dependency_script: "brew install bison flex curl binutils"
+          - os: 'ubuntu-latest'
+            dependency_script: "sudo apt-get update && sudo apt-get install -y bison flex binutils-dev"
+#          - os: 'macos-latest'
+#            dependency_script: "brew install bison flex curl binutils"
 #          - os: 'windows-latest'
 #            dependency_script: |
 #              choco install visualstudio2017buildtools
