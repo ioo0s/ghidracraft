@@ -147,8 +147,8 @@ public class DockingWindowsLookAndFeelUtils {
 	 */
 	public static List<String> getLookAndFeelNames() {
 		List<String> list = new ArrayList<>();
-		list.add(DockingWindowsLookAndFeelUtils.SYSTEM_LOOK_AND_FEEL);
 		list.add(DockingWindowsLookAndFeelUtils.DARCULA_LOOK_AND_FEEL);
+		list.add(DockingWindowsLookAndFeelUtils.SYSTEM_LOOK_AND_FEEL);
 
 		LookAndFeelInfo[] installedLookAndFeels = UIManager.getInstalledLookAndFeels();
 		for (LookAndFeelInfo info : installedLookAndFeels) {
@@ -307,13 +307,6 @@ public class DockingWindowsLookAndFeelUtils {
 	 */
 	private static String getDefaultLookAndFeelName() {
 		return DARCULA_LOOK_AND_FEEL;
-		/*
-		OperatingSystem OS = Platform.CURRENT_PLATFORM.getOperatingSystem();
-		if (OS == OperatingSystem.LINUX) {
-			return NIMBUS_LOOK_AND_FEEL;
-		}
-		return SYSTEM_LOOK_AND_FEEL;
-		*/
 	}
 
 	/**

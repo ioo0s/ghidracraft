@@ -1,6 +1,6 @@
 # Ghidracraft
 
-[[TODO: add logo]]
+![logo](./logo.png)
 
 Ghidracraft is [bincraft](https://github.com/StarCrossPortal/bincraft)'s ghidra fork.
 
