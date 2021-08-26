@@ -437,7 +437,7 @@ task linux64BuildDecompilerRust(type: Exec) {
 
         copy {
             from "$workingDir/target/${target}/release/${binary}"
-            into "build/os/linux64/"
+            into "$rootDir/Ghidra/Features/Decompiler/build/os/linux64/"
         }
     }
 }
@@ -456,13 +456,13 @@ task osx64BuildDecompilerRust(type: Exec) {
 	def target = "${arch}-apple-darwin"
 
 	commandLine 'cargo', 'build', '--release', '--target', target
-
+	println "$rootDir"
     doLast {
         def binary = 'decompile'
 
         copy {
             from "$workingDir/target/${target}/release/${binary}"
-            into "build/os/osx64/"
+            into "$rootDir/Ghidra/Features/Decompiler/build/os/osx64/"
         }
     }
 }

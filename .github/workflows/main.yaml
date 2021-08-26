@@ -46,9 +46,6 @@ jobs:
           toolchain: stable
       - name: "Install dependencies"
         run: "${{ matrix.platform.dependency_script }}"
-      #- name: "Apply patches"
-      #  run: git apply ../patches/*
-      #  working-directory: ./ghidracraft
       - name: "Recent history"
         run: git log --oneline -n 15
         working-directory: ./
