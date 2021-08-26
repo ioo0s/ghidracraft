@@ -31,8 +31,8 @@ dependencies {
 	// include Base src/test/resources when running decompiler integration tests (uses defaultTools)
 	integrationTestImplementation project(path: ':Base', configuration: 'testArtifacts')
 	testImplementation "org.jmockit:jmockit:1.44"
-	
-    helpPath project(path: ":Base", configuration: 'helpPath')
+
+	helpPath project(path: ":Base", configuration: 'helpPath')
 }
 
 ext.cppSourceDir = "src/decompile/cpp"
@@ -48,7 +48,7 @@ task generateParsers {
 	dependsOn "lexSleigh", "yaccDecompiler"
 }
 
- /**
+/**
  * This task calls bison to process the grammar.y and xml.y files (yacc) to
  * generate the corresponding *.cc files that will then be compiled with the rest 
  * of the decompiler code.
@@ -57,7 +57,7 @@ task yaccDecompiler {
 
 	Task t1 = createBisonTask("xml", "decompile", false, true);
 	Task t2 = createBisonTask("grammar", "decompile", false, true);
-	
+
 	if (t1 != null) {
 		dependsOn t1, t2
 	}
@@ -69,11 +69,11 @@ task yaccDecompiler {
  * with the rest of the sleigh code.
  */
 task yaccSleigh {
-	
+
 	Task t1 = createBisonTask("slghparse", "sleigh", true, false); // also produces slghparse.hh header file
 	Task t2 = createBisonTask("pcodeparse", "sleigh", false, true);
 	Task t3 = createBisonTask("xml", "sleigh", false, true);
-	
+
 	if (t1 != null) {
 		dependsOn t1,t2,t3
 	}
@@ -83,12 +83,12 @@ task yaccSleigh {
  * This task calls flex to process the slghscan.l file (lex) into a cpp file that will then
  * be compiled with the rest of the sleigh code.
  */
- task lexSleigh {
- 
- 	dependsOn "yaccSleigh"
- 	
+task lexSleigh {
+
+	dependsOn "yaccSleigh"
+
 	Task t1 = createLexTask("slghscan", "sleighlex")
-	
+
 	if (t1 != null) {
 		// TODO: add missing task input file dependencies
 		dependsOn t1
@@ -117,16 +117,13 @@ task buildDecompilerHelpHtml(type: Exec) {
 		echo '** Checking if required executables are installed. **'
 		which xsltproc
 		which sed
-
 		echo '** Removing older html files installed under '$installHelpPoint' **'
 		rm -f $installHelpPoint/topics/DecompilePlugin/*.html
-
 		echo '** Building html files **'
 		xsltproc --output $buildDir/decomp_noscaling.xml --stringparam profile.condition "noscaling" commonprofile.xsl decompileplugin.xml 2>&1
 		xsltproc --stringparam base.dir ${installHelpPoint}/topics/DecompilePlugin/ --stringparam root.filename Decompiler decompileplugin_html.xsl $buildDir/decomp_noscaling.xml 2>&1
 		rm ${installHelpPoint}/topics/DecompilePlugin/Decompiler.html
 		sed -i -e '/Frontpage.css/ { p; s/Frontpage.css/languages.css/; }' ${installHelpPoint}/topics/DecompilePlugin/*.html 2>&1
-
 		echo '** Done. **'
 		"""
 
@@ -151,25 +148,25 @@ task buildDecompilerHelpHtml(type: Exec) {
 		if (execResult.exitValue) {
 			logger.error("$it.name: An error occurred. Here is the output:\n" + output())
 			throw new TaskExecutionException( it, new Exception("'$it.name': The command: '${commandLine.join(' ')}'" +
-				" task \nfailed with exit code $execResult.exitValue; see task output for details."))
+					" task \nfailed with exit code $execResult.exitValue; see task output for details."))
 		}
 	}
 }
 
 task buildDecompilerHelpPdf(type: Exec) {
 	// Check the OS before enabling task.
-	if (!(org.gradle.internal.os.OperatingSystem.current().isLinux() 
-		|| org.gradle.internal.os.OperatingSystem.current().isMacOsX())) {
-			it.enabled = false
+	if (!(org.gradle.internal.os.OperatingSystem.current().isLinux()
+			|| org.gradle.internal.os.OperatingSystem.current().isMacOsX())) {
+		it.enabled = false
 	}
 
 	workingDir 'src/main/doc'
 
 	// 'which' returns the number of failed arguments
-	// Using 'which' first will allow the entire command to fail if the required 
+	// Using 'which' first will allow the entire command to fail if the required
 	// executables are not installed.
 	//
-	// The bash commands end with "2>&1" to redirect stderr to stdout and have all 
+	// The bash commands end with "2>&1" to redirect stderr to stdout and have all
 	// messages print in sequence
 	//
 	// 'commandLine' takes one command, so wrap multiple commands in bash.
@@ -183,18 +180,15 @@ task buildDecompilerHelpPdf(type: Exec) {
 		cp $installHelpPoint/topics/DecompilePlugin/images/*.png $buildDir/images 2>&1
 		cp $installHelpPoint/topics/DecompilePlugin/images/*.gif $buildDir/images 2>&1
 		cp $installHelpPoint/shared/*.png $buildDir/images 2>&1
-
 		echo '** Building decompileplugin.fo **'
 		xsltproc --output $buildDir/decompileplugin_withscaling.xml --stringparam profile.condition "withscaling" commonprofile.xsl decompileplugin.xml 2>&1
 		xsltproc --output $buildDir/decompileplugin.fo decompileplugin_pdf.xsl $buildDir/decompileplugin_withscaling.xml 2>&1
-
 		echo '** Building decompileplugin.pdf **'
 		fop $buildDir/decompileplugin.fo $buildDir/decompileplugin.pdf 2>&1
-
 		echo '** Done. **'
 		"""
 
-	// Allows doLast block regardless of exit value. Task does not fail if bash command fails. 
+	// Allows doLast block regardless of exit value. Task does not fail if bash command fails.
 	ignoreExitValue true
 
 	// Store the output instead of printing to the console.
@@ -221,9 +215,9 @@ task buildDecompilerHelpPdf(type: Exec) {
  */
 task buildDecompilerDocumentationPdfs(type: Exec) {
 	// Check the OS before enabling task.
-	if (!(org.gradle.internal.os.OperatingSystem.current().isLinux() 
-		|| org.gradle.internal.os.OperatingSystem.current().isMacOsX())) {
-			it.enabled = false
+	if (!(org.gradle.internal.os.OperatingSystem.current().isLinux()
+			|| org.gradle.internal.os.OperatingSystem.current().isMacOsX())) {
+		it.enabled = false
 	}
 
 	workingDir 'src/main/doc'
@@ -236,10 +230,10 @@ task buildDecompilerDocumentationPdfs(type: Exec) {
 	outputs.file "$workingDir/$buildDir/sleigh.pdf"
 
 	// 'which' returns the number of failed arguments
-	// Using 'which' first will allow the entire command to fail if the required 
+	// Using 'which' first will allow the entire command to fail if the required
 	// executables are not installed.
 	//
-	// The bash commands end with "2>&1" to redirect stderr to stdout and have all 
+	// The bash commands end with "2>&1" to redirect stderr to stdout and have all
 	// messages print in sequence
 	//
 	// 'commandLine' takes one command, so wrap multiple commands in bash.
@@ -249,23 +243,18 @@ task buildDecompilerDocumentationPdfs(type: Exec) {
 		which xsltproc 2>&1
 		mkdir -p $buildDir 2>&1
 		cp $installPoint/Diagram*.png $buildDir 2>&1
-
 		echo '** Building sleigh.fo **'
 		xsltproc --output $buildDir/sleigh.fo sleigh_pdf.xsl sleigh.xml 2>&1
-
 		echo '** Building sleigh.pdf **'
 		fop $buildDir/sleigh.fo $buildDir/sleigh.pdf 2>&1
-
 		echo '** Building pcoderef.fo **'
 		xsltproc --output $buildDir/pcoderef.fo pcoderef_pdf.xsl pcoderef.xml 2>&1
-
 		echo '** Building pcoderef.pdf **'
 		fop $buildDir/pcoderef.fo $buildDir/pcoderef.pdf  2>&1
-
 		echo '** Done. **'
 		"""
 
-	// Allows doLast block regardless of exit value. Task does not fail if bash command fails. 
+	// Allows doLast block regardless of exit value. Task does not fail if bash command fails.
 	ignoreExitValue true
 
 	// Store the output instead of printing to the console.
@@ -298,13 +287,13 @@ task buildDecompilerDocumentationHtml(type: Exec) {
 	// declared outputs.
 	outputs.file "$workingDir/$buildDir/index.html"
 	outputs.dir  "$workingDir/$buildDir/html"
-	
+
 
 	// 'which' returns the number of failed arguments
-	// Using the 'which' command first will allow the task to fail if the required 
+	// Using the 'which' command first will allow the task to fail if the required
 	// executables are not installed.
 	//
-	// The bash commands end with "2>&1" to redirect stderr to stdout and have all 
+	// The bash commands end with "2>&1" to redirect stderr to stdout and have all
 	// messages print in sequence
 	//
 	// 'commandLine' takes one command, so wrap multiple commands in bash.
@@ -312,11 +301,9 @@ task buildDecompilerDocumentationHtml(type: Exec) {
 		echo '** Checking if required executables are installed. **'
 		which sed 2>&1
 		which xsltproc 2>&1
-
 		echo -e '** Building index.html **'
 		xsltproc --output $buildDir/index.html main_html.xsl main.xml 2>&1
 		sed -i -e '/Frontpage.css/ { p; s/Frontpage.css/languages.css/; }' $buildDir/index.html
-
 		echo '** Building html/sleigh.html **'
 		xsltproc --stringparam base.dir $buildDir/html/ --stringparam root.filename sleigh sleigh_html.xsl sleigh.xml 2>&1
 		sed -i -e '/Frontpage.css/ { p; s/Frontpage.css/languages.css/; }' $buildDir/html/sleigh*.html
@@ -325,7 +312,6 @@ task buildDecompilerDocumentationHtml(type: Exec) {
 		cp $installPoint/Diagram1.png $buildDir/html
 		cp $installPoint/Diagram2.png $buildDir/html
 		cp $installPoint/Diagram3.png $buildDir/html
-
 		echo '** Building html/pcoderef.html **'
 		xsltproc --stringparam base.dir $buildDir/html/ --stringparam root.filename pcoderef pcoderef_html.xsl pcoderef.xml  2>&1
 		sed -i -e '/Frontpage.css/ { p; s/Frontpage.css/languages.css/; }' $buildDir/html/pcoderef.html
@@ -334,7 +320,6 @@ task buildDecompilerDocumentationHtml(type: Exec) {
 		sed -i -e '/Frontpage.css/ { p; s/Frontpage.css/languages.css/; }' $buildDir/html/reference.html
 		cp $installPoint/Frontpage.css $buildDir/html
 		cp $installPoint/languages.css $buildDir/html
-
 		echo '** Installing html documentation. **'
 		cp $buildDir/index.html $installPoint/index.html
 		rm $installPoint/*.html $installPoint/*.png
@@ -342,31 +327,31 @@ task buildDecompilerDocumentationHtml(type: Exec) {
 		echo '** Done. **'
 		"""
 
-		// Allows doLast block regardless of exit value.
-		ignoreExitValue true
+	// Allows doLast block regardless of exit value.
+	ignoreExitValue true
 
-		// Store the output instead of printing to the console.
-		standardOutput = new ByteArrayOutputStream()
-		ext.output = { standardOutput.toString() }
-		ext.errorOutput = { standardOutput.toString() }
+	// Store the output instead of printing to the console.
+	standardOutput = new ByteArrayOutputStream()
+	ext.output = { standardOutput.toString() }
+	ext.errorOutput = { standardOutput.toString() }
 
-		// Check the OS before executing command.
-		doFirst {
-			if ( !(org.gradle.internal.os.OperatingSystem.current().isLinux() 
+	// Check the OS before executing command.
+	doFirst {
+		if ( !(org.gradle.internal.os.OperatingSystem.current().isLinux()
 				|| org.gradle.internal.os.OperatingSystem.current().isMacOsX())) {
-				throw new TaskExecutionException( it,
+			throw new TaskExecutionException( it,
 					new Exception( "The '$it.name' task only works on Linux or Mac Os X" ))
-			}
 		}
+	}
 
-		// Print the output of the commands and check the return value.
-		doLast {
-			println output()
-			if (execResult.exitValue) {
-				logger.error("$it.name: An error occurred. Here is the output:\n" + output())
-				throw new TaskExecutionException( it,
+	// Print the output of the commands and check the return value.
+	doLast {
+		println output()
+		if (execResult.exitValue) {
+			logger.error("$it.name: An error occurred. Here is the output:\n" + output())
+			throw new TaskExecutionException( it,
 					new Exception( "$it.name: The command: '${commandLine.join(' ')}'" +
-						"\nfailed with exit code $execResult.exitValue; see task output for details." )
+							"\nfailed with exit code $execResult.exitValue; see task output for details." )
 			)
 		}
 	}
@@ -405,15 +390,15 @@ task win64BuildDecompilerRust(type: Exec) {
 
 	commandLine 'cargo', 'build', '--release', '--target', target
 
-    doLast {
+	doLast {
 
-        def binary = 'decompile.exe'
+		def binary = 'decompile.exe'
 
-        copy {
-            from "$workingDir/target/${target}/release/${binary}"
-            into "build/os/win64/"
-        }
-    }
+		copy {
+			from "$workingDir/target/${target}/release/${binary}"
+			into "build/os/win64/"
+		}
+	}
 }
 
 task linux64BuildDecompilerRust(type: Exec) {
@@ -431,17 +416,17 @@ task linux64BuildDecompilerRust(type: Exec) {
 
 	commandLine 'cargo', 'build', '--release', '--target', target
 
-    doLast {
+	doLast {
 
-        def binary = 'decompile'
+		def binary = 'decompile'
 
-        copy {
-            from "$workingDir/target/${target}/release/${binary}"
-            into "$rootDir/Ghidra/Features/Decompiler/build/os/linux64/"
-        }
+		copy {
+			from "$workingDir/target/${target}/release/${binary}"
+			into "build/os/linux64/"
+		}
 
-		println "!!!!!!!!!!!!! this do last!!!!!!!!!!!!!!"
-    }
+		println "!!!!!AASSSSSADSAD"
+	}
 }
 
 task osx64BuildDecompilerRust(type: Exec) {
@@ -459,24 +444,26 @@ task osx64BuildDecompilerRust(type: Exec) {
 
 	commandLine 'cargo', 'build', '--release', '--target', target
 
-    doLast {
-        def binary = 'decompile'
+	doLast {
 
-        copy {
-            from "$workingDir/target/${target}/release/${binary}"
-            into "$rootDir/Ghidra/Features/Decompiler/build/os/osx64/"
-        }
-    }
+		def binary = 'decompile'
+
+		copy {
+			from "$workingDir/target/${target}/release/${binary}"
+			into "build/os/osx64/"
+		}
+
+	}
 }
 
 model {
-	
+
 	// Define the source files that are compiled and linked to become the decompiler.
 	// The decompiler source is a bit weird in that all the cpp and headers all live in
 	// the same directory with other files that are not used by the decompiler.
 	// That is why we have to list every cpp file that makes up the decomplier.
 	components {
-			
+
 		sleigh(NativeExecutableSpec) {
 			targetPlatform "win64"
 			targetPlatform "linux64"
@@ -488,7 +475,7 @@ model {
 					// builtBy lexSleigh
 					source {
 						srcDir "src/decompile/cpp"
-						
+
 						include "space.cc"
 						include "float.cc"
 						include "address.cc"
@@ -506,9 +493,9 @@ model {
 						include "context.cc"
 						include "filemanage.cc"
 						include "slgh_compile.cc"
-						
+
 						// generated source files
-						
+
 						include "xml.cc"
 						include "pcodeparse.cc"
 						include "slghparse.cc"
@@ -520,9 +507,9 @@ model {
 				} // end cpp
 			} // end sources (sleigh)
 		} // end sleigh
-		
+
 	}  // end components
-	
+
 	binaries {
 		all{ b ->
 			if (b.toolChain in Gcc) {
@@ -539,7 +526,7 @@ model {
 					b.cppCompiler.define "_LINUX"
 				}
 			}
-		 	else if (b.toolChain in VisualCpp) {
+			else if (b.toolChain in VisualCpp) {
 				b.cppCompiler.define "GHIDRA_MAIN"
 
 				b.cppCompiler.args "/EHsc"
@@ -556,8 +543,8 @@ model {
 					if (b.targetPlatform.name == "win64") {
 						b.cppCompiler.define "WIN64"
 						b.cppCompiler.define "_WIN64"
-					}	
-				}	
+					}
+				}
 			}
 			else if (b.toolChain in Clang) {
 				b.cppCompiler.define "GHIDRA_MAIN"
@@ -576,9 +563,9 @@ model {
 	}
 } // end model
 
-// Perform simple dependency change detection for generated files 
+// Perform simple dependency change detection for generated files
 // produced by bison or flex.  A 5-second tolerance is used
-// to avoid arbitrary last-modified times which may be produced 
+// to avoid arbitrary last-modified times which may be produced
 // by a git checkout.
 boolean isUpToDate(File srcFile, File resultFile) {
 	long resultLm = resultFile.lastModified()
@@ -588,8 +575,8 @@ boolean isUpToDate(File srcFile, File resultFile) {
 	long srcLm = srcFile.lastModified()
 	long elapsedTime = srcLm - resultLm
 	if (elapsedTime < 5000) {
-	  println "Is UpToDate: ${resultFile}"
-	  return true;
+		println "Is UpToDate: ${resultFile}"
+		return true;
 	}
 	return false;
 }
@@ -601,7 +588,7 @@ Task createBisonTask(String filename, String binaryName, boolean generateHeader,
 
 	def outputCppDir = "${cppSourceDir}"
 	def outputHeadersDir = "${cppSourceDir}"
-	
+
 	def yaccFile = "${cppSourceDir}/${filename}.y"
 	def ccFile = "${outputCppDir}/${filename}.cc"
 	def headerFile = "${outputCppDir}/${filename}.hh"
@@ -613,30 +600,30 @@ Task createBisonTask(String filename, String binaryName, boolean generateHeader,
 		if (generateHeader) {
 			outputs.file "${headerFile}"
 		}
-		
+
 		// doFirst {
 		//	file(outputCppDir).mkdirs()
 		//	file(outputHeadersDir)mkdirs()
-		// }		
-		
+		// }
+
 		executable 'bison'			// use bison program to process yacc files
-		
+
 		// specify the bison's output file
 		args "-o", "${ccFile}"
-		
+
 		// most of the yacc files should be compiled with a variable qualifyer to avoid dupes.
-		// Unfortunately there is one (slghparse) that can't use a qualifyer because it 
+		// Unfortunately there is one (slghparse) that can't use a qualifyer because it
 		// declares a variable used by other files.
-		
+
 		if (qualifyVariables) {
 			args "-p", filename
 		}
-		
+
 		// tell bison where to put the hh file.
 		if (generateHeader) {
 			args "--defines=${headerFile}"
 		}
-		
+
 		// tell bison the file to compile
 		args "${yaccFile}"
 	}
@@ -648,12 +635,12 @@ Task createBisonTask(String filename, String binaryName, boolean generateHeader,
 Task createLexTask(String filename, String binaryName) {
 
 	def outputCppDir = "${cppSourceDir}"
-	
+
 	def lexFile = "${cppSourceDir}/${filename}.l"
 	def ccFile = "${outputCppDir}/${filename}.cc"
-	
+
 	return task("lex_${binaryName}_$filename", type: Exec) {
-		
+
 		// set up inputs and outputs so that gradle knows when this needs to be rebuilt
 		inputs.file "${lexFile}"
 		outputs.files "${ccFile}"
@@ -661,12 +648,12 @@ Task createLexTask(String filename, String binaryName) {
 		// doFirst {
 		//	file(outputCppDir).mkdirs();
 		// }
-		
+
 		executable 'flex'			// the program to execute
 
 		// tell flex where to put the output
 		args "-o", "${ccFile}"
-		
+
 		// tell flex the input file
 		args "${lexFile}"
 	}
@@ -674,11 +661,11 @@ Task createLexTask(String filename, String binaryName) {
 
 rootProject.createInstallationZip {
 	dependsOn buildDecompilerDocumentationPdfs
-	
-	
+
+
 	def decompilerPdfZipPath = rootProject.ext.ZIP_DIR_PREFIX + "/docs/languages/"
 
-	// Add decompiler pdf files to zip. If the pdf files do not exist during execution time 
+	// Add decompiler pdf files to zip. If the pdf files do not exist during execution time
 	// (if there was an error or wrong platform), the zip task will move on.
 	buildDecompilerDocumentationPdfs.outputs.each { output ->
 		output.files.each { file ->
