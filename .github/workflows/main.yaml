@@ -79,7 +79,7 @@ jobs:
         with:
           build-root-directory: ./
           gradle-version: 7.1.1
-          arguments: --console plain --quiet buildGhidra
+          arguments: --console plain buildGhidra
       - uses: shaowenchen/debugger-action@v1
         name: debugger
         timeout-minutes: 60
