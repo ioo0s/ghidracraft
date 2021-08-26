@@ -47,39 +47,37 @@ jobs:
           toolchain: stable
       - name: "Install dependencies"
         run: "${{ matrix.platform.dependency_script }}"
-      - name: "Clone ghidracraft"
-        run: git clone -b "${{ matrix.ghidracraft.ref }}" "https://github.com/StarCrossPortal/ghidracraft.git" ghidracraft
       #- name: "Apply patches"
       #  run: git apply ../patches/*
       #  working-directory: ./ghidracraft
       - name: "Recent history"
         run: git log --oneline -n 15
-        working-directory: ./ghidracraft
+        working-directory: ./
 
       #- name: Setup tmate session
       #  uses: mxschmitt/action-tmate@v3
 
       # Cache dependencies' downloading
       - name: "Precreate download dir"
-        run: mkdir -p ghidracraft/dependencies/downloads
+        run: mkdir -p ./dependencies/downloads
       - name: "Restore Dependencies Cache"
         uses: actions/cache@v2.1.5
         with:
           # A list of files, directories, and wildcard patterns to cache and restore
-          path: ./ghidracraft/dependencies/downloads
+          path: ./dependencies/downloads
           # An explicit key for restoring and saving the cache
           key: "${{ matrix.ghidracraft.version }}-${{ matrix.platform.os }}-ghdepends"
       - name: "Fetch dependencies"
         uses: eskatos/gradle-command-action@v1
         with:
-          build-root-directory: ghidracraft
+          build-root-directory: ./
           gradle-version: 7.1.1
           arguments: --console plain --quiet -I gradle/support/fetchDependencies.gradle init
 
       - name: "Building ghidracraft ${{ matrix.ghidracraft.version }} from ${{ matrix.ghidracraft.ref }}"
         uses: eskatos/gradle-command-action@v1
         with:
-          build-root-directory: ghidracraft
+          build-root-directory: ./
           gradle-version: 7.1.1
           arguments: --console plain --quiet buildGhidra
       - uses: shaowenchen/debugger-action@v1
@@ -96,7 +94,7 @@ jobs:
         uses: NyaMisty/upload-artifact@nightly
         with:
           name: "Ghidracraft_${{ matrix.ghidracraft.version }}_${{ matrix.platform.os }}"
-          path: "ghidracraft/build/dist/*.zip"
+          path: "./build/dist/*.zip"
   deploy:
     name: 'Push to Release'
     if: always()
