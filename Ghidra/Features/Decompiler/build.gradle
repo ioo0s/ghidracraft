@@ -414,7 +414,9 @@ task linux64BuildDecompilerRust(type: Exec) {
 
 	def target = "${arch}-unknown-linux-gnu"
 
-	commandLine 'cargo', 'build', '--release', '--target', target
+	doFirst {
+		commandLine 'cargo', 'build', '--release', '--target', target
+	}
 
 	doLast {
 
@@ -442,7 +444,10 @@ task osx64BuildDecompilerRust(type: Exec) {
 
 	def target = "${arch}-apple-darwin"
 
-	commandLine 'cargo', 'build', '--release', '--target', target
+	doFirst {
+		commandLine 'cargo', 'build', '--release', '--target', target
+	}
+
 
 	doLast {
 
@@ -452,6 +457,8 @@ task osx64BuildDecompilerRust(type: Exec) {
 			from "$workingDir/target/${target}/release/${binary}"
 			into "build/os/osx64/"
 		}
+
+		println "!!!!!AASSSSSADSAD"
 
 	}
 }
