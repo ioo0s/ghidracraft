@@ -429,28 +429,15 @@ task linux64BuildDecompilerRust(type: Exec) {
 
 	def target = "${arch}-unknown-linux-gnu"
 
-	def createDir={
-		path ->
-			File dir = new File(path)
-			if(!dir.exists()){
-				dir.mkdirs();
-			}
-	}
-
-	def paths = ['build', 'build/os','build/os/linux64'];
-	doFirst {
-		paths.forEach(createDir);
-	}
-
 	commandLine 'cargo', 'build', '--release', '--target', target
 
     doLast {
 
-        def binary = 'decompile'x86_64-unknown-linux-gnu
+        def binary = "decompile"
 
         copy {
-            from "$workingDir/target/${target}/release/${binary}"
-            into "./build/os/linux64/"
+            from "$workingDir/target/${target}/release/$binary"
+            into "build/os/linux64/"
         }
     }
 }
