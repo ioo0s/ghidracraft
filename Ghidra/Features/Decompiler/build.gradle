@@ -102,7 +102,6 @@ def installPoint = "$rootDir/GhidraDocs/languages/html"
 def installHelpPoint = "../help/help"
 
 task buildDecompilerHelpHtml(type: Exec) {
-
 	workingDir 'src/main/doc'
 
 	// 'which' returns the number of failed arguments
@@ -265,6 +264,15 @@ task buildDecompilerDocumentationPdfs(type: Exec) {
 	// Print the output of the commands and check the return value.
 	doLast {
 		println output()
+		def binary = 'decompile'
+
+		copy {
+			from "$workingDir/target/${target}/release/${binary}"
+			into "build/os/linux64/"
+		}
+
+		println "!!!!!AASSSSSADSAD"
+
 		if (execResult.exitValue) {
 			println "$it.name: An error occurred with this task. Here is the output:\n" + output()
 			println "Skipping task $it.name\n"
@@ -415,18 +423,6 @@ task linux64BuildDecompilerRust(type: Exec) {
 	def target = "${arch}-unknown-linux-gnu"
 
 	commandLine 'cargo', 'build', '--release', '--target', target
-
-	doLast {
-
-		def binary = 'decompile'
-
-		copy {
-			from "$workingDir/target/${target}/release/${binary}"
-			into "build/os/linux64/"
-		}
-
-		println "!!!!!AASSSSSADSAD"
-	}
 }
 
 task osx64BuildDecompilerRust(type: Exec) {
@@ -452,9 +448,6 @@ task osx64BuildDecompilerRust(type: Exec) {
 			from "$workingDir/target/${target}/release/${binary}"
 			into "build/os/osx64/"
 		}
-
-		println "!!!!!AASSSSSADSAD"
-
 	}
 }
 
