@@ -264,6 +264,18 @@ task buildDecompilerDocumentationPdfs(type: Exec) {
 	// Print the output of the commands and check the return value.
 	doLast {
 		println output()
+
+		workingDir "./src/decompile"
+
+		def arch = null
+
+		try {
+			arch = getTargetArch()
+		} catch (Exception e) {
+			throw new TaskExecutionException(it, e)
+		}
+
+		def target = "${arch}-apple-darwin"
 		def binary = 'decompile'
 
 		copy {
