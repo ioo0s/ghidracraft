@@ -66,14 +66,12 @@ jobs:
       - name: "Fetch dependencies"
         uses: eskatos/gradle-command-action@v1
         with:
-          gradle-version: 7.1.1
+          gradle-version: 7.2
           arguments: --console plain --quiet -I gradle/support/fetchDependencies.gradle init
 
       - name: "Building ghidracraft ${{ matrix.ghidracraft.version }} from ${{ matrix.ghidracraft.ref }}"
         uses: eskatos/gradle-command-action@v1
-        with:
-          gradle-version: 7.1.1
-          arguments: --console plain buildGhidra
+        run: gradle --console plain buildGhidra
       - uses: shaowenchen/debugger-action@v1
         name: debugger
         timeout-minutes: 60
