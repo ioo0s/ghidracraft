@@ -76,7 +76,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
             command: build
-            args: --manifest-path ghidracraft/Ghidra/Features/Decompiler/src/decompile/Cargo.toml --release --target ${{ matrix.platform.arch }}
+            args: --manifest-path ./Ghidra/Features/Decompiler/src/decompile/Cargo.toml --release --target ${{ matrix.platform.arch }}
       - name: "Building ghidracraft ${{ matrix.ghidracraft.version }} from ${{ matrix.ghidracraft.ref }}"
         uses: eskatos/gradle-command-action@v1
         with:
