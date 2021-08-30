@@ -73,7 +73,7 @@ jobs:
           gradle-version: 7.1.1
           arguments: --console plain --quiet -I gradle/support/fetchDependencies.gradle init
       - name: "Build decompile"
-      - uses: actions-rs/cargo@v1
+        uses: actions-rs/cargo@v1
         with:
             command: build
             args: --release --target ${{ matrix.platform.arch }}
