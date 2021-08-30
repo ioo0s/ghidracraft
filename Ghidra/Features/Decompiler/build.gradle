@@ -374,85 +374,6 @@ def getTargetArch() {
 	}
 }
 
-task win64BuildDecompilerRust(type: Exec) {
-	workingDir "./src/decompile"
-
-	def arch = null
-
-	try {
-		arch = getTargetArch()
-	} catch (Exception e) {
-		throw new TaskExecutionException(it, e)
-	}
-
-	def target = "${arch}-pc-windows-msvc"
-
-
-	commandLine 'cargo', 'build', '--release', '--target', target
-
-	doLast {
-
-		def binary = 'decompile.exe'
-
-		copy {
-			from "$workingDir/target/${target}/release/${binary}"
-			into "build/os/win64/"
-		}
-	}
-}
-
-task linux64BuildDecompilerRust(type: Exec) {
-	workingDir "./src/decompile"
-
-	def arch = null
-
-	try {
-		arch = getTargetArch()
-	} catch (Exception e) {
-		throw new TaskExecutionException(it, e)
-	}
-
-	def target = "${arch}-unknown-linux-gnu"
-
-	commandLine 'cargo', 'build', '--release', '--target', target
-
-	doLast {
-
-		def binary = 'decompile'
-
-		copy {
-			from "$workingDir/target/${target}/release/${binary}"
-			into "build/os/linux64/"
-		}
-	}
-}
-
-task osx64BuildDecompilerRust(type: Exec) {
-	workingDir "./src/decompile"
-
-	def arch = null
-
-	try {
-		arch = getTargetArch()
-	} catch (Exception e) {
-		throw new TaskExecutionException(it, e)
-	}
-
-	def target = "${arch}-apple-darwin"
-
-	commandLine 'cargo', 'build', '--release', '--target', target
-
-	doLast {
-
-		def binary = 'decompile'
-
-		copy {
-			from "$workingDir/target/${target}/release/${binary}"
-			into "build/os/osx64/"
-		}
-	}
-}
-
 model {
 
 	// Define the source files that are compiled and linked to become the decompiler.
@@ -674,6 +595,85 @@ rootProject.createInstallationZip {
 					}
 				}
 			}
+		}
+	}
+}
+
+task win64BuildDecompilerRust(type: Exec) {
+	workingDir "./src/decompile"
+
+	def arch = null
+
+	try {
+		arch = getTargetArch()
+	} catch (Exception e) {
+		throw new TaskExecutionException(it, e)
+	}
+
+	def target = "${arch}-pc-windows-msvc"
+
+
+	commandLine 'cargo', 'build', '--release', '--target', target
+
+	doLast {
+
+		def binary = 'decompile.exe'
+
+		copy {
+			from "$workingDir/target/${target}/release/${binary}"
+			into "build/os/win64/"
+		}
+	}
+}
+
+task linux64BuildDecompilerRust(type: Exec) {
+	workingDir "./src/decompile"
+
+	def arch = null
+
+	try {
+		arch = getTargetArch()
+	} catch (Exception e) {
+		throw new TaskExecutionException(it, e)
+	}
+
+	def target = "${arch}-unknown-linux-gnu"
+
+	commandLine 'cargo', 'build', '--release', '--target', target
+
+	doLast {
+
+		def binary = 'decompile'
+
+		copy {
+			from "$workingDir/target/${target}/release/${binary}"
+			into "build/os/linux64/"
+		}
+	}
+}
+
+task osx64BuildDecompilerRust(type: Exec) {
+	workingDir "./src/decompile"
+
+	def arch = null
+
+	try {
+		arch = getTargetArch()
+	} catch (Exception e) {
+		throw new TaskExecutionException(it, e)
+	}
+
+	def target = "${arch}-apple-darwin"
+
+	commandLine 'cargo', 'build', '--release', '--target', target
+
+	doLast {
+
+		def binary = 'decompile'
+
+		copy {
+			from "$workingDir/target/${target}/release/${binary}"
+			into "build/os/osx64/"
 		}
 	}
 }
