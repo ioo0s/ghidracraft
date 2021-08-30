@@ -20,18 +20,22 @@ jobs:
       matrix:
         platform:
           - os: 'ubuntu-latest'
+            arch: 'x86_64-unknown-linux-gnu'
             dependency_script: "sudo apt-get update && sudo apt-get install -y bison flex binutils-dev"
-#          - os: 'macos-latest'
-#            dependency_script: "brew install bison flex curl binutils"
-#          - os: 'windows-latest'
-#            dependency_script: |
-#              choco install visualstudio2017buildtools
-#              choco install winflexbison
-#              ren "C:\ProgramData\chocolatey\bin\win_bison.exe" "bison.exe"
-#              ren "C:\ProgramData\chocolatey\bin\win_flex.exe" "flex.exe"
+          - os: 'macos-latest'
+            arch: 'x86_64-apple-darwin'
+            dependency_script: "brew install bison flex curl binutils"
+          - os: 'windows-latest'
+            arch: 'x86_64-pc-windows-msvc'
+            dependency_script: |
+              choco install visualstudio2017buildtools
+              choco install winflexbison
+              ren "C:\ProgramData\chocolatey\bin\win_bison.exe" "bison.exe"
+              ren "C:\ProgramData\chocolatey\bin\win_flex.exe" "flex.exe"
         ghidracraft:
           - version: 'nightly'
             ref: 'master'
+
     runs-on: "${{ matrix.platform.os }}"
     steps:
       - uses: actions/checkout@v2
@@ -40,11 +44,10 @@ jobs:
         with:
           java-version: '15'
           java-package: 'jdk'
-      - name: Install latest nightly
+      - name: Install rust
         uses: actions-rs/toolchain@v1
         with:
-            toolchain: nightly
-            override: true
+            toolchain: stable
       - name: "Install dependencies"
         run: "${{ matrix.platform.dependency_script }}"
       - name: "Recent history"
@@ -69,25 +72,25 @@ jobs:
         with:
           gradle-version: 7.1.1
           arguments: --console plain --quiet -I gradle/support/fetchDependencies.gradle init
+      - name: "Build decompile"
+      - uses: actions-rs/cargo@v1
+        with:
+            command: build
+            args: --release --target ${{ matrix.platform.arch }}
       - name: "Building ghidracraft ${{ matrix.ghidracraft.version }} from ${{ matrix.ghidracraft.ref }}"
         uses: eskatos/gradle-command-action@v1
         with:
             gradle-version: 7.1.1
             arguments: --console plain buildGhidra
-      - name: "Make sure decompile moved"
-        uses: eskatos/gradle-command-action@v1
-        with:
-          gradle-version: 7.1.1
-          arguments: --console plain buildGhidra
-      - uses: shaowenchen/debugger-action@v1
-        name: debugger
-        timeout-minutes: 60
-        continue-on-error: true
-        with:
-          frp_server_addr: ${{ secrets.FRP_SERVER_ADDR }}
-          frp_server_port: ${{ secrets.FRP_SERVER_PORT }}
-          frp_token: ${{ secrets.FRP_TOKEN }}
-          ssh_port: ${{ secrets.SSH_PORT }}
+#      - uses: shaowenchen/debugger-action@v1
+#        name: debugger
+#        timeout-minutes: 60
+#        continue-on-error: true
+#        with:
+#          frp_server_addr: ${{ secrets.FRP_SERVER_ADDR }}
+#          frp_server_port: ${{ secrets.FRP_SERVER_PORT }}
+#          frp_token: ${{ secrets.FRP_TOKEN }}
+#          ssh_port: ${{ secrets.SSH_PORT }}
       - name: "Upload package"
         uses: NyaMisty/upload-artifact@nightly
         with:
