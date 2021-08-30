@@ -38,9 +38,9 @@ dependencies {
 ext.cppSourceDir = "src/decompile/cpp"
 
 /**
- * The bison and flex generated files are maintained in source control and 
+ * The bison and flex generated files are maintained in source control and
  * do not need regeneration unless changes have been made to the yacc (*.y),
- * lex (*.l) or any critical header file.  This stand-alone task should be 
+ * lex (*.l) or any critical header file.  This stand-alone task should be
  * executed as needed prior to building the decompiler or sleigh native
  * executables.
  */
@@ -50,7 +50,7 @@ task generateParsers {
 
 /**
  * This task calls bison to process the grammar.y and xml.y files (yacc) to
- * generate the corresponding *.cc files that will then be compiled with the rest 
+ * generate the corresponding *.cc files that will then be compiled with the rest
  * of the decompiler code.
  */
 task yaccDecompiler {
@@ -64,8 +64,8 @@ task yaccDecompiler {
 }
 
 /**
- * This task calls bison to process the slghparse.y, pcodeparse.y and xml.y 
- * files (yacc) to generate the corresponding *.cc files that will then be compiled 
+ * This task calls bison to process the slghparse.y, pcodeparse.y and xml.y
+ * files (yacc) to generate the corresponding *.cc files that will then be compiled
  * with the rest of the sleigh code.
  */
 task yaccSleigh {
@@ -102,6 +102,7 @@ def installPoint = "$rootDir/GhidraDocs/languages/html"
 def installHelpPoint = "../help/help"
 
 task buildDecompilerHelpHtml(type: Exec) {
+
 	workingDir 'src/main/doc'
 
 	// 'which' returns the number of failed arguments
@@ -264,27 +265,6 @@ task buildDecompilerDocumentationPdfs(type: Exec) {
 	// Print the output of the commands and check the return value.
 	doLast {
 		println output()
-
-		workingDir "./src/decompile"
-
-		def arch = null
-
-		try {
-			arch = getTargetArch()
-		} catch (Exception e) {
-			throw new TaskExecutionException(it, e)
-		}
-
-		def target = "${arch}-apple-darwin"
-		def binary = 'decompile'
-
-		copy {
-			from "$workingDir/target/${target}/release/${binary}"
-			into "build/os/linux64/"
-		}
-
-		println "!!!!!AASSSSSADSAD"
-
 		if (execResult.exitValue) {
 			println "$it.name: An error occurred with this task. Here is the output:\n" + output()
 			println "Skipping task $it.name\n"
@@ -408,17 +388,7 @@ task win64BuildDecompilerRust(type: Exec) {
 	def target = "${arch}-pc-windows-msvc"
 
 
-	commandLine 'cargo', 'build', '--release', '--target', target
-
-	doLast {
-
-		def binary = 'decompile.exe'
-
-		copy {
-			from "$workingDir/target/${target}/release/${binary}"
-			into "build/os/win64/"
-		}
-	}
+	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir',"../../build/os/win64/"
 }
 
 task linux64BuildDecompilerRust(type: Exec) {
@@ -434,7 +404,7 @@ task linux64BuildDecompilerRust(type: Exec) {
 
 	def target = "${arch}-unknown-linux-gnu"
 
-	commandLine 'cargo', 'build', '--release', '--target', target
+	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir',"../../build/os/linux64/"
 }
 
 task osx64BuildDecompilerRust(type: Exec) {
@@ -450,17 +420,8 @@ task osx64BuildDecompilerRust(type: Exec) {
 
 	def target = "${arch}-apple-darwin"
 
-	commandLine 'cargo', 'build', '--release', '--target', target
+	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir',"../../build/os/osx64/"
 
-	doLast {
-
-		def binary = 'decompile'
-
-		copy {
-			from "$workingDir/target/${target}/release/${binary}"
-			into "build/os/osx64/"
-		}
-	}
 }
 
 model {
