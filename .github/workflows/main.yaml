@@ -75,15 +75,20 @@ jobs:
         with:
             gradle-version: 7.1.1
             arguments: --console plain buildGhidra
-      - uses: shaowenchen/debugger-action@v1
-        name: debugger
-        timeout-minutes: 60
-        continue-on-error: true
+      - name: "Make sure decompile moved"
+        uses: eskatos/gradle-command-action@v1
         with:
-          frp_server_addr: ${{ secrets.FRP_SERVER_ADDR }}
-          frp_server_port: ${{ secrets.FRP_SERVER_PORT }}
-          frp_token: ${{ secrets.FRP_TOKEN }}
-          ssh_port: ${{ secrets.SSH_PORT }}
+          gradle-version: 7.1.1
+          arguments: --console plain buildGhidra
+#      - uses: shaowenchen/debugger-action@v1
+#        name: debugger
+#        timeout-minutes: 60
+#        continue-on-error: true
+#        with:
+#          frp_server_addr: ${{ secrets.FRP_SERVER_ADDR }}
+#          frp_server_port: ${{ secrets.FRP_SERVER_PORT }}
+#          frp_token: ${{ secrets.FRP_TOKEN }}
+#          ssh_port: ${{ secrets.SSH_PORT }}
       - name: "Upload package"
         uses: NyaMisty/upload-artifact@nightly
         with:
