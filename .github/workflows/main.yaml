@@ -40,10 +40,11 @@ jobs:
         with:
           java-version: '15'
           java-package: 'jdk'
-      - name: Install Rust
+      - name: Install latest nightly
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly
+            toolchain: nightly
+            override: true
       - name: "Install dependencies"
         run: "${{ matrix.platform.dependency_script }}"
       - name: "Recent history"
