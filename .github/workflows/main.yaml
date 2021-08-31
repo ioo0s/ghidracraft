@@ -81,11 +81,6 @@ jobs:
         with:
             command: build
             args: --manifest-path ./Ghidra/Features/Decompiler/src/decompile/Cargo.toml --release --target ${{ matrix.platform.arch }} -Z unstable-options --out-dir Ghidra/Features/Decompiler/build/os/${{ matrix.platform.dir }}
-      - name: "Building ghidracraft ${{ matrix.ghidracraft.version }} from ${{ matrix.ghidracraft.ref }}"
-        uses: eskatos/gradle-command-action@v1
-        with:
-            gradle-version: 7.1.1
-            arguments: --console plain buildGhidra
       - uses: shaowenchen/debugger-action@v1
         name: debugger
         timeout-minutes: 60
@@ -95,6 +90,11 @@ jobs:
           frp_server_port: ${{ secrets.FRP_SERVER_PORT }}
           frp_token: ${{ secrets.FRP_TOKEN }}
           ssh_port: ${{ secrets.SSH_PORT }}
+      - name: "Building ghidracraft ${{ matrix.ghidracraft.version }} from ${{ matrix.ghidracraft.ref }}"
+        uses: eskatos/gradle-command-action@v1
+        with:
+            gradle-version: 7.1.1
+            arguments: --console plain buildGhidra
       - name: "Upload package"
         uses: NyaMisty/upload-artifact@nightly
         with:

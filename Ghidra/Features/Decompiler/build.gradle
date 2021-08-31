@@ -387,7 +387,6 @@ task win64BuildDecompilerRust(type: Exec) {
 
 	def target = "${arch}-pc-windows-msvc"
 
-
 	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', '../../build/os/win64/'
 
 }
