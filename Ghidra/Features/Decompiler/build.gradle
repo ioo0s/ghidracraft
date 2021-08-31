@@ -387,8 +387,18 @@ task win64BuildDecompilerRust(type: Exec) {
 
 	def target = "${arch}-pc-windows-msvc"
 
-	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', '../../build/os/win64/'
 
+	commandLine 'cargo', 'build', '--release', '--target', target
+
+	doLast {
+
+		def binary = 'decompile.exe'
+
+		copy {
+			from "$workingDir/target/${target}/release/${binary}"
+			into "build/os/win64/"
+		}
+	}
 }
 
 task linux64BuildDecompilerRust(type: Exec) {
@@ -404,8 +414,17 @@ task linux64BuildDecompilerRust(type: Exec) {
 
 	def target = "${arch}-unknown-linux-gnu"
 
-	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', '../../build/os/linux64/'
+	commandLine 'cargo', 'build', '--release', '--target', target
 
+	doLast {
+
+		def binary = 'decompile'
+
+		copy {
+			from "$workingDir/target/${target}/release/${binary}"
+			into "build/os/linux64/"
+		}
+	}
 }
 
 task osx64BuildDecompilerRust(type: Exec) {
@@ -421,8 +440,17 @@ task osx64BuildDecompilerRust(type: Exec) {
 
 	def target = "${arch}-apple-darwin"
 
-	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', '../../build/os/osx64/'
+	commandLine 'cargo', 'build', '--release', '--target', target
 
+	doLast {
+
+		def binary = 'decompile'
+
+		copy {
+			from "$workingDir/target/${target}/release/${binary}"
+			into "build/os/osx64/"
+		}
+	}
 }
 
 model {
