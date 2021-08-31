@@ -1,0 +1,129 @@
+# vim: expandtab tabstop=2 shiftwidth=2
+name: CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      unk:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    # Daily
+    - cron: '0 8 * * *'
+jobs:
+  build:
+    name: 'Build Ghidracraft - ${{ matrix.platform.os }} - ${{ matrix.ghidracraft.version }}'
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - os: 'ubuntu-latest'
+            arch: 'x86_64-unknown-linux-gnu'
+            dir: 'linux64'
+            dependency_script: "sudo apt-get update && sudo apt-get install -y bison flex binutils-dev"
+          - os: 'macos-latest'
+            arch: 'x86_64-apple-darwin'
+            dir: 'osx64'
+            dependency_script: "brew install bison flex curl binutils"
+          - os: 'windows-latest'
+            dir: 'win64'
+            arch: 'x86_64-pc-windows-msvc'
+            dependency_script: |
+              choco install visualstudio2017buildtools
+              choco install winflexbison
+              ren "C:\ProgramData\chocolatey\bin\win_bison.exe" "bison.exe"
+              ren "C:\ProgramData\chocolatey\bin\win_flex.exe" "flex.exe"
+        ghidracraft:
+          - version: 'nightly'
+            ref: 'master'
+
+    runs-on: "${{ matrix.platform.os }}"
+    steps:
+      - uses: actions/checkout@v2
+      - name: 'Set up JDK'
+        uses: actions/setup-java@v1
+        with:
+          java-version: '15'
+          java-package: 'jdk'
+      - name: Install rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+      - name: "Install dependencies"
+        run: "${{ matrix.platform.dependency_script }}"
+      - name: "Recent history"
+        run: git log --oneline -n 15
+        working-directory: ./
+
+      #- name: Setup tmate session
+      #  uses: mxschmitt/action-tmate@v3
+
+      # Cache dependencies' downloading
+      - name: "Precreate download dir"
+        run: mkdir -p ./dependencies/downloads
+      - name: "Restore Dependencies Cache"
+        uses: actions/cache@v2.1.5
+        with:
+          # A list of files, directories, and wildcard patterns to cache and restore
+          path: ./dependencies/downloads
+          # An explicit key for restoring and saving the cache
+          key: "${{ matrix.ghidracraft.version }}-${{ matrix.platform.os }}-ghdepends"
+      - name: "Fetch dependencies"
+        uses: eskatos/gradle-command-action@v1
+        with:
+          gradle-version: 7.1.1
+          arguments: --console plain --quiet -I gradle/support/fetchDependencies.gradle init
+      - name: "Build decompile"
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --manifest-path ./Ghidra/Features/Decompiler/src/decompile/Cargo.toml --release --target ${{ matrix.platform.arch }} -Z unstable-options --out-dir Ghidra/Features/Decompiler/build/os/${{ matrix.platform.dir }}
+      - name: "Building ghidracraft ${{ matrix.ghidracraft.version }} from ${{ matrix.ghidracraft.ref }}"
+        uses: eskatos/gradle-command-action@v1
+        with:
+          gradle-version: 7.1.1
+          arguments: --console plain buildGhidra
+      - name: "COPY decompile"
+        uses: eskatos/gradle-command-action@v1
+        with:
+          gradle-version: 7.1.1
+          arguments: --console plain buildGhidra
+      - name: "Building ghidracraft include decompile"
+        uses: eskatos/gradle-command-action@v1
+        with:
+          gradle-version: 7.1.1
+          arguments: --console plain buildGhidra
+      - name: "Upload package"
+        uses: NyaMisty/upload-artifact@nightly
+        with:
+          name: "Ghidracraft_${{ matrix.ghidracraft.version }}_${{ matrix.platform.os }}"
+          path: "./build/dist/*.zip"
+  deploy:
+    name: 'Push to Release'
+    if: always()
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - run: mkdir dist
+      - name: Download built artifacts
+        uses: actions/download-artifact@master
+        with:
+          path: dist
+      - name: Rearrange artifacts
+        run: |
+          mkdir dist1
+          find dist -type f -name "*" -exec sh -c 'mv "{}" "dist1/$( basename "$( dirname "{}" )" )_$( basename "{}" )"' \;
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Pushing to release
+        uses: ncipollo/release-action@v1
+        with:
+          name: "GhidraNightlyBuild-${{ steps.date.outputs.date }}"
+          commit: ${{ github.sha }}
+          tag: "GhidraNightlyBuild-${{ steps.date.outputs.date }}"
+          artifacts: "dist1/*.zip"
+          token: ${{ secrets.GHIDRACRAFT }}
