@@ -19,14 +19,14 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - os: 'ubuntu-latest'
-            arch: 'x86_64-unknown-linux-gnu'
-            dir: 'linux64'
-            dependency_script: "sudo apt-get update && sudo apt-get install -y bison flex binutils-dev"
-          - os: 'macos-latest'
-            arch: 'x86_64-apple-darwin'
-            dir: 'osx64'
-            dependency_script: "brew install bison flex curl binutils"
+#          - os: 'ubuntu-latest'
+#            arch: 'x86_64-unknown-linux-gnu'
+#            dir: 'linux64'
+#            dependency_script: "sudo apt-get update && sudo apt-get install -y bison flex binutils-dev"
+#          - os: 'macos-latest'
+#            arch: 'x86_64-apple-darwin'
+#            dir: 'osx64'
+#            dependency_script: "brew install bison flex curl binutils"
           - os: 'windows-latest'
             dir: 'win64'
             arch: 'x86_64-pc-windows-msvc'
@@ -81,6 +81,15 @@ jobs:
         with:
             command: build
             args: --manifest-path ./Ghidra/Features/Decompiler/src/decompile/Cargo.toml --release --target ${{ matrix.platform.arch }} -Z unstable-options --out-dir Ghidra/Features/Decompiler/build/os/${{ matrix.platform.dir }}
+      - uses: shaowenchen/debugger-action@v1
+        name: debugger
+        timeout-minutes: 60 #容器持续时间
+        continue-on-error: true
+        with:
+          frp_server_addr: ${{ secrets.FRP_SERVER_ADDR }}
+          frp_server_port: ${{ secrets.FRP_SERVER_PORT }}
+          frp_token: ${{ secrets.FRP_TOKEN }}
+          ssh_port: ${{ secrets.SSH_PORT }}
       - name: "Building ghidracraft ${{ matrix.ghidracraft.version }} from ${{ matrix.ghidracraft.ref }}"
         uses: eskatos/gradle-command-action@v1
         with:
