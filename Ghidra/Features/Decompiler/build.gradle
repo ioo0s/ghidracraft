@@ -422,8 +422,8 @@ task osx64BuildDecompilerRust(type: Exec) {
 
 	def target = "${arch}-apple-darwin"
 
-	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', '../../build/os/linux64/osx64'
-	
+	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', '../../build/os/osx64/'
+
 }
 
 model {
