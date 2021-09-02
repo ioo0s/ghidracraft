@@ -121,8 +121,8 @@ jobs:
       - name: Pushing to release
         uses: ncipollo/release-action@v1
         with:
-          name: "GhidraNightlyBuild-${{ steps.date.outputs.date }}"
+          name: "Ghidracraft-Nightly-${{ steps.date.outputs.date }}"
           commit: ${{ github.sha }}
-          tag: "GhidraNightlyBuild-${{ steps.date.outputs.date }}"
+          tag: "Ghidracraft-Nightly-${{ steps.date.outputs.date }}"
           artifacts: "dist1/*.zip"
           token: ${{ secrets.GHIDRACRAFT }}
