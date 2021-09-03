@@ -44,51 +44,8 @@ For more detailed information on building Ghidra, please read the [Developer Gui
 
 ## Develop
 
-### User Scripts and Extensions
-Ghidra installations support users writing custom scripts and extensions via the *GhidraDev* plugin 
-for Eclipse.  The plugin and its corresponding instructions can be found within a Ghidra release at
-`Extensions/Eclipse/GhidraDev/`.
+Checkout [Original Ghidra Dev Guide](./DevGuide.md) and [GhidraCraft Dev Guide](./GhidraCraftDocs/DevGuide.md) for more.
 
-### Advanced Development
-To develop the Ghidra tool itself, it is highly recommended to use Eclipse, which the Ghidra 
-development process has been highly customized for.
+## Thanks
 
-##### Install build and development tools:
-* Follow the above build instructions so the build completes without errors
-* Install [Eclipse IDE for Java Developers][eclipse]
-
-##### Prepare the development environment (Linux-only, see **NOTE** for Windows/macOS):
-``` 
-$ gradle prepdev eclipse buildNatives_linux64
-```
-**NOTE:** If you are on a Windows or macOS platform, change `buildNatives_linux64` to 
-`buildNatives_win64` or `gradle buildNatives_osx64`. 
-
-##### Import Ghidra projects into Eclipse:
-* *File* -> *Import...*
-* *General* | *Existing Projects into Workspace*
-* Select root directory to be your downloaded or cloned ghidra source repository
-* Check *Search for nested projects*
-* Click *Finish*
-
-When Eclipse finishes building the projects, Ghidra can be launched and debugged with the provided
-**Ghidra** Eclipse *run configuration*.
-
-For more detailed information on developing Ghidra, please read the [Developer Guide][devguide]. 
-
-## Contribute
-If you would like to contribute bug fixes, improvements, and new features back to Ghidra, please 
-take a look at our [Contributor Guide][contrib] to see how you can participate in this open 
-source project.
-
-
-[nsa]: https://www.nsa.gov
-[contrib]: CONTRIBUTING.md
-[devguide]: DevGuide.md
-[career]: https://www.intelligencecareers.gov/nsa
-[project]: https://www.ghidra-sre.org/
-[jdk11]: https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot
-[gradle]: https://gradle.org/releases/
-[vs]: https://visualstudio.microsoft.com/vs/community/
-[eclipse]: https://www.eclipse.org/downloads/packages/
-[master]: https://github.com/NationalSecurityAgency/ghidra/archive/refs/heads/master.zip
+- [ghidra-builder](https://github.com/NyaMisty/ghidra-builder) which gives insight of how nightly build could be done
