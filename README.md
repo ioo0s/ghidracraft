@@ -34,13 +34,6 @@ users are all pioneers!
 - continuously improve ghidra decompile result
 - complete GraalVM support
 - write devlopment tutorial
-##### Create development build: 
-```
-$ gradle buildGhidra
-```
-The compressed development build will be located at `build/dist/`.
-
-For more detailed information on building Ghidra, please read the [Developer Guide][devguide].  
 
 ## Develop
 
