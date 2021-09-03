@@ -56,7 +56,10 @@ development process has been highly customized for.
 ##### Install build and development tools:
 * Follow the above build instructions so the build completes without errors
 * Install [Eclipse IDE for Java Developers][eclipse]
-
+* Change the rust version to nightly
+```
+$ rustup default nightly
+```
 ##### Prepare the development environment (Linux-only, see **NOTE** for Windows/macOS):
 ``` 
 $ gradle prepdev eclipse buildNatives_linux64
