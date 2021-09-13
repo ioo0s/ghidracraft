@@ -376,6 +376,8 @@ def getTargetArch() {
 task win64BuildDecompilerRust(type: Exec) {
 	if (isCurrentWindows()) {
 		exec {
+			workingDir "./src/decompile"
+
 			def arch = null
 
 			try {
