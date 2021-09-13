@@ -374,69 +374,71 @@ def getTargetArch() {
 }
 
 task win64BuildDecompilerRust(type: Exec) {
-	workingDir "./src/decompile"
+	if (isCurrentWindows()) {
+		exec {
+			def arch = null
 
-	def arch = null
+			try {
+				arch = getTargetArch()
+			} catch (Exception e) {
+				throw new TaskExecutionException(it, e)
+			}
 
-	try {
-		arch = getTargetArch()
-	} catch (Exception e) {
-		throw new TaskExecutionException(it, e)
+			def target = "${arch}-pc-windows-msvc"
+			commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', '../../build/os/win_x86_64'
+		}
 	}
-
-	def target = "${arch}-pc-windows-msvc"
-
-
-	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', '../../build/os/win_x86_64'
-
 }
 
 task linux64BuildDecompilerRust(type: Exec) {
-	workingDir "./src/decompile"
+	if (isCurrentLinux()) {
+		exec {
+			workingDir "./src/decompile"
 
-	def out_path = null
-	def arch = null
+			def out_path = null
+			def arch = null
 
-	try {
-		arch = getTargetArch()
-	} catch (Exception e) {
-		throw new TaskExecutionException(it, e)
+			try {
+				arch = getTargetArch()
+			} catch (Exception e) {
+				throw new TaskExecutionException(it, e)
+			}
+
+			if (arch == "aarch64") {
+				out_path = "../../build/os/linux_arm_64"
+			} else {
+				out_path = "../../build/os/linux_x86_64"
+			}
+
+			def target = "${arch}-unknown-linux-gnu"
+			commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', out_path
+		}
 	}
-
-	if (arch == "aarch64") {
-		out_path = "../../build/os/linux_arm_64"
-	} else {
-		out_path = "../../build/os/linux_x86_64"
-	}
-
-
-	def target = "${arch}-unknown-linux-gnu"
-
-	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', out_path
-
 }
 
 task osx64BuildDecompilerRust(type: Exec) {
-	workingDir "./src/decompile"
-	def out_path = null
-	def arch = null
+	if (isCurrentMac()) {
+		exec {
+			workingDir "./src/decompile"
+			def out_path = null
+			def arch = null
 
-	try {
-		arch = getTargetArch()
-	} catch (Exception e) {
-		throw new TaskExecutionException(it, e)
+			try {
+				arch = getTargetArch()
+			} catch (Exception e) {
+				throw new TaskExecutionException(it, e)
+			}
+
+			if (arch == "aarch64") {
+				out_path = "../../build/os/mac_arm_64"
+			} else {
+				out_path = "../../build/os/mac_x86_64"
+			}
+
+			def target = "${arch}-apple-darwin"
+			commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', out_path
+		}
 	}
-
-	if ( arch == "aarch64" ) {
-		out_path = "../../build/os/mac_arm_64"
-	}else {
-		out_path = "../../build/os/mac_x86_64"
-	}
-
-	def target = "${arch}-apple-darwin"
-
-	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', out_path
-
 }
 
 model {
