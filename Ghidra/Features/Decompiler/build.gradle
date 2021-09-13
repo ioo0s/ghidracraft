@@ -387,13 +387,14 @@ task win64BuildDecompilerRust(type: Exec) {
 	def target = "${arch}-pc-windows-msvc"
 
 
-	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', '../../build/os/win64'
+	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', '../../build/os/win_x86_64'
 
 }
 
 task linux64BuildDecompilerRust(type: Exec) {
 	workingDir "./src/decompile"
 
+	def out_path = null
 	def arch = null
 
 	try {
@@ -402,15 +403,22 @@ task linux64BuildDecompilerRust(type: Exec) {
 		throw new TaskExecutionException(it, e)
 	}
 
+	if (arch == "aarch64") {
+		out_path = "../../build/os/linux_arm_64"
+	} else {
+		out_path = "../../build/os/linux_x86_64"
+	}
+
+
 	def target = "${arch}-unknown-linux-gnu"
 
-	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', '../../build/os/linux64'
+	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', out_path
 
 }
 
 task osx64BuildDecompilerRust(type: Exec) {
 	workingDir "./src/decompile"
-
+	def out_path = null
 	def arch = null
 
 	try {
@@ -419,9 +427,15 @@ task osx64BuildDecompilerRust(type: Exec) {
 		throw new TaskExecutionException(it, e)
 	}
 
+	if ( arch == "aarch64" ) {
+		out_path = "../../build/os/mac_arm_64"
+	}else {
+		out_path = "../../build/os/mac_x86_64"
+	}
+
 	def target = "${arch}-apple-darwin"
 
-	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', '../../build/os/osx64'
+	commandLine 'cargo', 'build', '--release', '--target', target, '-Z', 'unstable-options', '--out-dir', out_path
 
 }
 
