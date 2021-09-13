@@ -5,9 +5,9 @@ on:
     inputs:
       unk:
   push:
-    branches: [ master ]
+    branches: [ ci_test ]
   pull_request:
-    branches: [ master ]
+    branches: [ ci_test ]
   #schedule:
     # Daily
     # - cron: '0 8 * * *'
@@ -22,18 +22,18 @@ jobs:
             arch: 'x86_64-unknown-linux-gnu'
             dir: 'linux64'
             dependency_script: "sudo apt-get update && sudo apt-get install -y bison flex binutils-dev"
-          - os: 'macos-latest'
-            arch: 'x86_64-apple-darwin'
-            dir: 'osx64'
-            dependency_script: "brew install bison flex curl binutils"
-          - os: 'windows-latest'
-            dir: 'win64'
-            arch: 'x86_64-pc-windows-msvc'
-            dependency_script: |
-              choco install visualstudio2017buildtools
-              choco install winflexbison
-              ren "C:\ProgramData\chocolatey\bin\win_bison.exe" "bison.exe"
-              ren "C:\ProgramData\chocolatey\bin\win_flex.exe" "flex.exe"
+#          - os: 'macos-latest'
+#            arch: 'x86_64-apple-darwin'
+#            dir: 'osx64'
+#            dependency_script: "brew install bison flex curl binutils"
+#          - os: 'windows-latest'
+#            dir: 'win64'
+#            arch: 'x86_64-pc-windows-msvc'
+#            dependency_script: |
+#              choco install visualstudio2017buildtools
+#              choco install winflexbison
+#              ren "C:\ProgramData\chocolatey\bin\win_bison.exe" "bison.exe"
+#              ren "C:\ProgramData\chocolatey\bin\win_flex.exe" "flex.exe"
         ghidracraft:
           - version: 'nightly'
             ref: 'master'
