@@ -20,14 +20,14 @@ jobs:
         platform:
           - os: 'ubuntu-latest'
             arch: 'x86_64-unknown-linux-gnu'
-            dir: 'linux64'
+            dir: 'linux_x86_64'
             dependency_script: "sudo apt-get update && sudo apt-get install -y bison flex binutils-dev"
           - os: 'macos-latest'
             arch: 'x86_64-apple-darwin'
-            dir: 'osx64'
+            dir: 'mac_x86_64'
             dependency_script: "brew install bison flex curl binutils"
           - os: 'windows-latest'
-            dir: 'win64'
+            dir: 'win_x86_64'
             arch: 'x86_64-pc-windows-msvc'
             dependency_script: |
               choco install visualstudio2017buildtools
