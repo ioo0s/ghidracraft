@@ -89,7 +89,7 @@ public class ListingPanel extends JPanel implements FieldMouseListener, FieldLoc
 			// don't care
 		}
 	};
-	private List<ListingDisplayListener> displayListeners = new ArrayList<>();
+	private List<AddressSetDisplayListener> displayListeners = new ArrayList<>();
 
 	private String currentTextSelection;
 
@@ -478,12 +478,12 @@ public class ListingPanel extends JPanel implements FieldMouseListener, FieldLoc
 			element.setPixelMap(pixmap);
 		}
 
-		for (ListingDisplayListener listener : displayListeners) {
+		for (AddressSetDisplayListener listener : displayListeners) {
 			notifyDisplayListener(listener);
 		}
 	}
 
-	private void notifyDisplayListener(ListingDisplayListener listener) {
+	private void notifyDisplayListener(AddressSetDisplayListener listener) {
 		AddressSetView displayAddresses = pixmap.getAddressSet();
 		try {
 			listener.visibleAddressesChanged(displayAddresses);
@@ -1159,11 +1159,11 @@ public class ListingPanel extends JPanel implements FieldMouseListener, FieldLoc
 		layoutModel.dataChanged(true);
 	}
 
-	public void addListingDisplayListener(ListingDisplayListener listener) {
+	public void addDisplayListener(AddressSetDisplayListener listener) {
 		displayListeners.add(listener);
 	}
 
-	public void removeListingDisplayListener(ListingDisplayListener listener) {
+	public void removeDisplayListener(AddressSetDisplayListener listener) {
 		displayListeners.remove(listener);
 	}
 }

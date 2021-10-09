@@ -111,7 +111,6 @@ public class GdbModelImpl extends AbstractDebuggerObjectModel {
 				break;
 			}
 			case RUNNING: {
-				session.invalidateMemoryAndRegisterCaches();
 				session.setAccessible(false);
 				break;
 			}
@@ -131,15 +130,25 @@ public class GdbModelImpl extends AbstractDebuggerObjectModel {
 		}
 	}
 
+	public void setUnixNewLine() {
+		gdb.setUnixNewLine();
+	}
+
+	public void setDosNewLine() {
+		gdb.setDosNewLine();
+	}
+
 	public CompletableFuture<Void> startGDB(String gdbCmd, String[] args) {
-		try {
-			gdb.start(gdbCmd, args);
+		return CompletableFuture.runAsync(() -> {
+			try {
+				gdb.start(gdbCmd, args);
+			}
+			catch (IOException e) {
+				throw new DebuggerModelTerminatingException("Error while starting GDB", e);
+			}
+		}).thenCompose(__ -> {
 			return gdb.runRC();
-		}
-		catch (IOException e) {
-			return CompletableFuture.failedFuture(
-				new DebuggerModelTerminatingException("Error while starting GDB", e));
-		}
+		});
 	}
 
 	public void consoleLoop() throws IOException {

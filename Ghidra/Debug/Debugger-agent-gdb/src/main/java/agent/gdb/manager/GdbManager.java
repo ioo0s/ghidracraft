@@ -36,7 +36,7 @@ import agent.gdb.pty.linux.LinuxPtyFactory;
  * {@link CompletableFuture} all send commands to GDB, and the future completes when the command has
  * been executed.
  */
-public interface GdbManager extends AutoCloseable, GdbBreakpointInsertions {
+public interface GdbManager extends AutoCloseable, GdbConsoleOperations, GdbBreakpointInsertions {
 	public static final String DEFAULT_GDB_CMD = "/usr/bin/gdb";
 
 	/**
@@ -105,6 +105,37 @@ public interface GdbManager extends AutoCloseable, GdbBreakpointInsertions {
 	 */
 	public static GdbManager newInstance(PtyFactory ptyFactory) {
 		return new GdbManagerImpl(ptyFactory);
+	}
+
+	/**
+	 * Set the line terminator (separator) used to serialize commands to GDB
+	 * 
+	 * <p>
+	 * Because the manager may be communicating to GDB running remotely, possibly on another
+	 * platform, it may be necessary to customize the line terminator. The manager will default to
+	 * the line terminator used by the local system, i.e., {@link System#lineSeparator()}.
+	 * 
+	 * <p>
+	 * While permitted, it is not advisable to modify this parameter while the manager is running.
+	 * Chances are, if this was mis-configured, the manager and session are hopelessly out of sync.
+	 * Start a new properly configured session instead.
+	 * 
+	 * @param newLine the line separator to use
+	 */
+	public void setNewLine(String newLine);
+
+	/**
+	 * Set to UNIX-style (CR) line terminator
+	 */
+	default void setUnixNewLine() {
+		setNewLine("\n");
+	}
+
+	/**
+	 * Set to DOS-style (CRLF) line terminator
+	 */
+	default void setDosNewLine() {
+		setNewLine("\r\n");
 	}
 
 	/**
@@ -365,7 +396,9 @@ public interface GdbManager extends AutoCloseable, GdbBreakpointInsertions {
 	 * This is used to squelch normal processing of a stopped event until the next prompt
 	 * 
 	 * @return a future which completes when the "command" has finished execution
+	 * @deprecated I don't see this being used anywhere. Probably defunct.
 	 */
+	@Deprecated
 	CompletableFuture<Void> claimStopped();
 
 	/**
@@ -400,34 +433,6 @@ public interface GdbManager extends AutoCloseable, GdbBreakpointInsertions {
 	 * @return a future which completes then GDB has executed the command
 	 */
 	CompletableFuture<Void> removeInferior(GdbInferior inferior);
-
-	/**
-	 * Execute an arbitrary CLI command, printing output to the CLI console
-	 * 
-	 * <p>
-	 * Note: to ensure a certain thread or inferior has focus for a console command, see
-	 * {@link GdbThread#console(String)} and {@link GdbInferior#console(String)}.
-	 * 
-	 * @param command the command to execute
-	 * @return a future that completes when GDB has executed the command
-	 */
-	CompletableFuture<Void> console(String command);
-
-	/**
-	 * Execute an arbitrary CLI command, capturing its console output
-	 * 
-	 * <p>
-	 * The output will not be printed to the CLI console. To ensure a certain thread or inferior has
-	 * focus for a console command, see {@link GdbThread#consoleCapture(String)} and
-	 * {@link GdbInferior#consoleCapture(String)}. The caller should take care that other commands
-	 * or events are not actively producing console output. If they are, those lines may be captured
-	 * though they are unrelated to the given command. Generally, this can be achieved by assuring
-	 * that GDB is in the {@link GdbState#STOPPED} state using {@link #waitForState(GdbState)}.
-	 * 
-	 * @param command the command to execute
-	 * @return a future that completes with the captured output when GDB has executed the command
-	 */
-	CompletableFuture<String> consoleCapture(String command);
 
 	/**
 	 * Interrupt the GDB session
