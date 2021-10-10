@@ -85,6 +85,16 @@ jobs:
         with:
           gradle-version: 7.1.1
           arguments: --console plain buildGhidra
+      - name: "COPY decompile"
+        uses: eskatos/gradle-command-action@v1
+        with:
+          gradle-version: 7.1.1
+          arguments: --console plain buildGhidra
+      - name: "Building ghidracraft include decompile"
+        uses: eskatos/gradle-command-action@v1
+        with:
+          gradle-version: 7.1.1
+          arguments: --console plain buildGhidra
       - name: "Upload package"
         uses: NyaMisty/upload-artifact@nightly
         with:
