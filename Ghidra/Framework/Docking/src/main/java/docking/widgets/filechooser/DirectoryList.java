@@ -184,12 +184,10 @@ class DirectoryList extends GList<File> implements GhidraFileChooserDirectoryMod
 		});
 
 		listEditor = new JPanel(new BorderLayout());
-		listEditor.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
 		listEditor.add(listEditorLabel, BorderLayout.WEST);
 		listEditor.add(listEditorField, BorderLayout.CENTER);
 
-		listEditor.setBackground(Color.WHITE);
 		listEditorField.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 
 		add(listEditor);

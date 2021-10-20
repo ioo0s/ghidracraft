@@ -29,15 +29,10 @@ import javax.swing.event.ChangeListener;
 public class FileChooserToggleButton extends JToggleButton {
 	private static final long serialVersionUID = 1L;
 
-    static final Border RAISED_BORDER = BorderFactory.createCompoundBorder(
-				BorderFactory.createRaisedBevelBorder(),
-				BorderFactory.createEmptyBorder(1,1,1,1));
 
-    static final Border NO_BORDER = new EmptyBorder(RAISED_BORDER.getBorderInsets(new JButton()));
-
-    static final Border LOWERED_BORDER = BorderFactory.createCompoundBorder(
-				BorderFactory.createLoweredBevelBorder(),
-				BorderFactory.createEmptyBorder(1,1,1,1));
+    static final Border NO_BORDER = BorderFactory.createEmptyBorder(1, 1, 1, 1);
+    static final Border RAISED_BORDER = NO_BORDER;
+    static final Border LOWERED_BORDER = NO_BORDER;
 
 	public FileChooserToggleButton(String text) {
 		super(text);
@@ -49,15 +44,26 @@ public class FileChooserToggleButton extends JToggleButton {
 		initBorder();
 	}
 
+	private void setFocusBackground() {
+		setBackground(new Color(87, 92, 95));
+	}
+
+	private void setPressBackground() {
+		setBackground(new Color(112, 117, 120));
+	}
+
+	private void clearBackground() {
+		setBackground(Color.DARK_GRAY);
+	}
+
 	private void initBorder() {
-		setForeground(Color.WHITE);
+		setContentAreaFilled(true);
 		setOpaque(true);		
 		setHorizontalTextPosition(SwingConstants.CENTER);
 		setVerticalTextPosition(SwingConstants.BOTTOM);
-		clearBorder();		
-		
-		// prevents the WinXP LNF from painting its awkward borders
-		setContentAreaFilled( false );
+		this.setBorder(new EmptyBorder(4, 4, 4, 4));
+		clearBackground();
+		clearBorder();
 		
 		// changes the border on hover and click
 		addMouseListener(new ButtonMouseListener());
@@ -66,10 +72,10 @@ public class FileChooserToggleButton extends JToggleButton {
 		addChangeListener( new ChangeListener() {
             public void stateChanged( ChangeEvent e ) {
                 if ( isSelected() ) {
-                    setBorder( LOWERED_BORDER );
+					setPressBackground();
                 }
                 else {                    
-                    setBorder( NO_BORDER );
+					clearBackground();
                 }
             }		    
 		} );
@@ -90,7 +96,7 @@ public class FileChooserToggleButton extends JToggleButton {
 		private boolean inside = false;
 
 		private Border defaultBorder;
-		
+
 		@Override
         public void mouseEntered(MouseEvent me)  {
 		    if ( isSelected() ) {
@@ -98,6 +104,7 @@ public class FileChooserToggleButton extends JToggleButton {
 		    }
 		    
 		    defaultBorder = getBorder();
+			setFocusBackground();
 			setBorder(RAISED_BORDER);
 			inside = true;
 		}
@@ -109,6 +116,7 @@ public class FileChooserToggleButton extends JToggleButton {
             }
 		    
 			inside = false;
+			clearBackground();
 			restoreBorder();
 		}
 
@@ -119,7 +127,7 @@ public class FileChooserToggleButton extends JToggleButton {
             }
 		    
 			if (e.getButton() == MouseEvent.BUTTON1) {
-				setBorder(LOWERED_BORDER);
+				setPressBackground();
 			}
 		}
 
@@ -128,6 +136,8 @@ public class FileChooserToggleButton extends JToggleButton {
 		    if ( isSelected() ) {
                 return;
             }
+
+			clearBackground();
 		    
 			if (inside) {
 				setBorder(RAISED_BORDER);
