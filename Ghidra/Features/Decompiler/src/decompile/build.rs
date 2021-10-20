@@ -91,7 +91,8 @@ const DECOMPILER_SOURCE_BASE_CXX: &[&str] = &[
     "comment_ghidra.cc",
     "string_ghidra.cc",
     "xml.cc",
-    "ruststream.cc"
+    "ruststream.cc",
+    "testfunction.cc"
 ];
 
 const DECOMPILER_YACC: &[&'static str] = &["xml.y", "grammar.y"];
