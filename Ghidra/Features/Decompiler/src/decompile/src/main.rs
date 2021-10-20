@@ -24,7 +24,7 @@ mod serde_int;
 
 #[derive(Parser)]
 #[clap(version = "1.0", author = "BinCraft Team")]
-    #[clap(color = ColorChoice::Auto)]
+#[clap(color = ColorChoice::Auto)]
 struct Opts {
     /// commandline debugging mode
     #[cfg(debug_assertions)]
