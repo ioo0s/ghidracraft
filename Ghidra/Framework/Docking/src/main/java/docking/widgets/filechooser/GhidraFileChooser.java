@@ -71,8 +71,6 @@ public class GhidraFileChooser extends DialogComponentProvider
 		implements GhidraFileChooserListener, FileFilter {
 
 	static final String UP_BUTTON_NAME = "UP_BUTTON";
-	private static final Color FOREROUND_COLOR = Color.BLACK;
-	private static final Color BACKGROUND_COLOR = Color.WHITE;
 	static final String PREFERENCES_PREFIX = "G_FILE_CHOOSER";
 	private static final String WIDTH_PREFERENCE_PREFIX = PREFERENCES_PREFIX + ".WIDTH.";
 	private static final String HEIGHT_PREFERENCE_PREFIX = PREFERENCES_PREFIX + ".HEIGHT.";
@@ -307,7 +305,6 @@ public class GhidraFileChooser extends DialogComponentProvider
 		myComputerButton.setName("MY_COMPUTER_BUTTON");
 		myComputerButton.setIcon(ResourceManager.loadImage("images/computer.png"));
 		myComputerButton.addActionListener(e -> updateMyComputer());
-		myComputerButton.setForeground(FOREROUND_COLOR);
 
 		desktopButton = new FileChooserToggleButton("Desktop") {
 			@Override
@@ -318,7 +315,6 @@ public class GhidraFileChooser extends DialogComponentProvider
 		desktopButton.setName("DESKTOP_BUTTON");
 		desktopButton.setIcon(ResourceManager.loadImage("images/desktop.png"));
 		desktopButton.addActionListener(e -> updateDesktop());
-		desktopButton.setForeground(FOREROUND_COLOR);
 		desktopButton.setEnabled(fileChooserModel.getDesktopDirectory() != null);
 
 		homeButton = new FileChooserToggleButton("Home") {
@@ -330,7 +326,6 @@ public class GhidraFileChooser extends DialogComponentProvider
 		homeButton.setName("HOME_BUTTON");
 		homeButton.setIcon(ResourceManager.loadImage("images/user-home.png"));
 		homeButton.addActionListener(e -> updateHome());
-		homeButton.setForeground(FOREROUND_COLOR);
 
 		recentButton = new FileChooserToggleButton("Recent") {
 			@Override
@@ -346,7 +341,6 @@ public class GhidraFileChooser extends DialogComponentProvider
 
 		recentButton.setIcon(multiIcon);
 		recentButton.addActionListener(e -> updateRecent());
-		recentButton.setForeground(FOREROUND_COLOR);
 
 		shortCutButtonGroup = new UnselectableButtonGroup();
 		shortCutButtonGroup.add(myComputerButton);
@@ -362,8 +356,7 @@ public class GhidraFileChooser extends DialogComponentProvider
 		shortCutPanel.add(recentButton);
 
 		JPanel panel = new JPanel(new BorderLayout());
-		panel.setBorder(BorderFactory.createLoweredBevelBorder());
-		panel.setBackground(BACKGROUND_COLOR.darker());
+		//panel.setBorder(BorderFactory.createLoweredBevelBorder());
 		panel.add(shortCutPanel, BorderLayout.NORTH);
 		return panel;
 	}
@@ -471,7 +464,6 @@ public class GhidraFileChooser extends DialogComponentProvider
 	private void buildWaitPanel() {
 		waitPanel = new JPanel(new BorderLayout());
 		waitPanel.setBorder(BorderFactory.createLoweredBevelBorder());
-		waitPanel.setBackground(BACKGROUND_COLOR);
 		waitPanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -575,7 +567,6 @@ public class GhidraFileChooser extends DialogComponentProvider
 		directoryListModel = new DirectoryListModel();
 		directoryList = new DirectoryList(this, directoryListModel, rootPanel.getFont());
 		directoryList.setName("LIST");
-		directoryList.setBackground(BACKGROUND_COLOR);
 
 		directoryList.addFocusListener(new FocusAdapter() {
 			@Override
@@ -585,7 +576,6 @@ public class GhidraFileChooser extends DialogComponentProvider
 		});
 
 		directoryScroll = new JScrollPane(directoryList);
-		directoryScroll.getViewport().setBackground(BACKGROUND_COLOR);
 		directoryScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		directoryScroll.addComponentListener(new ComponentAdapter() {
 			//if the scroll pane is resized, we need to adjust
@@ -1471,7 +1461,6 @@ public class GhidraFileChooser extends DialogComponentProvider
 		directoryTableModel = new DirectoryTableModel(this);
 		directoryTable = new DirectoryTable(this, directoryTableModel);
 		directoryTable.setName("TABLE");
-		directoryTable.setBackground(BACKGROUND_COLOR);
 
 		directoryTable.addFocusListener(new FocusAdapter() {
 			@Override
@@ -1481,7 +1470,6 @@ public class GhidraFileChooser extends DialogComponentProvider
 		});
 
 		JScrollPane scrollPane = new JScrollPane(directoryTable);
-		scrollPane.getViewport().setBackground(BACKGROUND_COLOR);
 		return scrollPane;
 	}
 

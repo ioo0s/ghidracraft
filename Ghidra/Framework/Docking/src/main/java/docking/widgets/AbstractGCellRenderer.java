@@ -19,6 +19,7 @@ import java.awt.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 
 import docking.widgets.label.GDHtmlLabel;
@@ -156,7 +157,7 @@ public abstract class AbstractGCellRenderer extends GDHtmlLabel {
 	}
 
 	protected Color getDefaultBackgroundColor() {
-		return Color.WHITE;
+		return UIManager.getColor("Background");
 	}
 
 	protected Color getBackgroundColorForRow(int row) {
