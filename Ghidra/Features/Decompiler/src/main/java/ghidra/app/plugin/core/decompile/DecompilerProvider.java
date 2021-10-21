@@ -152,7 +152,7 @@ public class DecompilerProvider extends NavigatableComponentProviderAdapter
 
 	@Override
 	public boolean isSnapshot() {
-		// we are a snapshot when we are 'disconnected' 
+		// we are a snapshot when we are 'disconnected'
 		return !isConnected();
 	}
 
@@ -225,7 +225,7 @@ public class DecompilerProvider extends NavigatableComponentProviderAdapter
 
 		if (!isConnected()) {
 			if (program == null) {
-				// Special Case: this 'disconnected' provider is waiting to be initialized 
+				// Special Case: this 'disconnected' provider is waiting to be initialized
 				// with the first goTo() callback
 				doSetProgram(gotoProgram);
 			}
@@ -660,7 +660,7 @@ public class DecompilerProvider extends NavigatableComponentProviderAdapter
 			TokenHighlights myHighlights = myPanel.getSecondaryHighlightedTokens();
 			newProvider.setLocation(currentLocation, myPanel.getViewerPosition());
 
-			// transfer any state after the new decompiler is initialized 
+			// transfer any state after the new decompiler is initialized
 			DecompilerPanel newPanel = newProvider.getDecompilerPanel();
 			Map<String, Color> highlightsByName = myHighlights.copyHighlightsByName();
 			newProvider.doWheNotBusy(() -> {
@@ -773,9 +773,12 @@ public class DecompilerProvider extends NavigatableComponentProviderAdapter
 		RenameFunctionAction renameFunctionAction = new RenameFunctionAction();
 		setGroupInfo(renameFunctionAction, functionGroup, subGroupPosition++);
 
-		// not a function action, but it fits nicely in this group
+		// not function actions, but they fit nicely in this group
 		RenameLabelAction renameLabelAction = new RenameLabelAction();
 		setGroupInfo(renameLabelAction, functionGroup, subGroupPosition++);
+
+		RemoveLabelAction removeLabelAction = new RemoveLabelAction();
+		setGroupInfo(removeLabelAction, functionGroup, subGroupPosition++);
 
 		//
 		// Variables
@@ -904,7 +907,7 @@ public class DecompilerProvider extends NavigatableComponentProviderAdapter
 		// Comments
 		//
 		// NOTE: this is just a placeholder to represent where the comment actions should appear
-		//       in relation to our local actions.  
+		//       in relation to our local actions.
 		//
 
 		//
@@ -917,8 +920,8 @@ public class DecompilerProvider extends NavigatableComponentProviderAdapter
 		setGroupInfo(findAction, searchGroup, subGroupPosition++);
 
 		//
-		// References 
-		// 
+		// References
+		//
 
 		// note: set the menu group so that the 'References' group is with the 'Find' action
 		String referencesParentGroup = searchGroup;
@@ -994,6 +997,7 @@ public class DecompilerProvider extends NavigatableComponentProviderAdapter
 		addLocalAction(deleteSigAction);
 		addLocalAction(renameFunctionAction);
 		addLocalAction(renameLabelAction);
+		addLocalAction(removeLabelAction);
 		addLocalAction(debugFunctionAction);
 		addLocalAction(convertAction);
 		addLocalAction(findAction);
