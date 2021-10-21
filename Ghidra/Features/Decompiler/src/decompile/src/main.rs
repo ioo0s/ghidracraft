@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-use clap::{Clap, AppSettings};
+use clap::{Parser, ColorChoice};
 use std::env;
 
 pub mod patch;
@@ -22,9 +22,9 @@ pub mod bridge;
 pub mod cli;
 mod serde_int;
 
-#[derive(Clap)]
+#[derive(Parser)]
 #[clap(version = "1.0", author = "BinCraft Team")]
-#[clap(setting = AppSettings::ColoredHelp)]
+#[clap(color = ColorChoice::Auto)]
 struct Opts {
     /// commandline debugging mode
     #[cfg(debug_assertions)]
